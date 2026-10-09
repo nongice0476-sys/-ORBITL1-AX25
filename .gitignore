@@ -19,9 +19,6 @@ dist/
 tmp/
 output/
 
-# Embedded upstream reference clone (kept separately with its own Git history)
-reference-mobilinkd/
-
 # Editor and OS files
 .vscode/
 .idea/

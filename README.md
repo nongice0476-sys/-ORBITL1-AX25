@@ -10,11 +10,10 @@ AX.25 protocol prototype and HDLC/NRZI integration tests for ORBITL-1.
 - `docs/project/` — project phase and roadmap documents.
 - `docs/reference/` — AX.25 reference documents.
 - `scripts/documentation/` — optional document-generation utilities.
-- `archive/legacy-demos/` — historical prototypes that target an older API.
 
-The local `reference-mobilinkd/` upstream clone is excluded from the main Git
-repository because it maintains its own Git history. Runtime code uses the
-reviewed copy under `src/vendor/mobilinkd/`.
+Runtime code uses the reviewed Mobilinkd copy under
+`src/vendor/mobilinkd/`; upstream provenance is recorded in
+`THIRD_PARTY_NOTICES.md`.
 
 ## Run the regression suite
 
