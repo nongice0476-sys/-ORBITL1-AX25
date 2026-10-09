@@ -25,6 +25,13 @@ python -m unittest discover -s tests -v
 
 The expected maintained baseline is 46 passing tests.
 
+The suite is grouped by responsibility:
+
+- `test_ax25_core.py` — AX.25 addressing and frame construction.
+- `test_hdlc.py` — transmitter, NRZI, and HDLC stream decoding.
+- `test_receiver.py` — receive-pipeline behavior.
+- `test_reliability.py` — robustness, boundary, recovery, and acceptance tests.
+
 ## Optional documentation dependency
 
 The PDF translation utility has a separate dependency and may use a network
