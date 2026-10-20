@@ -18,6 +18,7 @@ dist/
 # Local/generated working files
 tmp/
 output/
+ORBITL1-AX25_Phases1-4_Release/
 
 # Editor and OS files
 .vscode/
