@@ -93,7 +93,7 @@ class PlainPaperCanvas(canvas.Canvas):
         if self._pageNumber > 1:
             self.setFont(FONT_REGULAR, 7.5)
             self.setFillColor(C_MUTED)
-            self.drawString(36, height - 26, "โครงการดาวเทียม ORBITL-1 • เอกสารนำเสนอความคืบหน้าระบบสื่อสาร AX.25")
+            self.drawString(36, height - 26, "โครงการดาวเทียม ORBITL-1 • รายงานความคืบหน้า ORBITL-1 AX.25")
             self.drawRightString(width - 36, height - 26, "PHASES 1–4 SOFTWARE VERIFICATION")
             self.setStrokeColor(C_BORDER_LIGHT)
             self.setLineWidth(0.5)
@@ -119,8 +119,8 @@ def get_paper_styles():
     styles["DocTitle"] = ParagraphStyle(
         "DocTitle",
         fontName=FONT_BOLD,
-        fontSize=15,
-        leading=19,
+        fontSize=15.5,
+        leading=19.5,
         textColor=C_BLACK,
         alignment=1,  # Center
         spaceAfter=3,
@@ -132,88 +132,88 @@ def get_paper_styles():
         leading=13,
         textColor=C_MUTED,
         alignment=1,
-        spaceAfter=8,
+        spaceAfter=7,
     )
     styles["Heading1"] = ParagraphStyle(
         "Heading1",
         fontName=FONT_BOLD,
-        fontSize=10.5,
-        leading=13.5,
+        fontSize=10,
+        leading=13,
         textColor=C_BLACK,
-        spaceBefore=7,
-        spaceAfter=3,
+        spaceBefore=6,
+        spaceAfter=2.5,
     )
     styles["Heading2"] = ParagraphStyle(
         "Heading2",
         fontName=FONT_BOLD,
-        fontSize=9,
-        leading=12,
+        fontSize=8.8,
+        leading=11.5,
         textColor=C_BLACK,
-        spaceBefore=5,
+        spaceBefore=4,
         spaceAfter=2,
     )
     styles["Body"] = ParagraphStyle(
         "Body",
         fontName=FONT_REGULAR,
-        fontSize=8,
-        leading=11.2,
+        fontSize=7.8,
+        leading=11,
         textColor=C_DARK,
-        spaceAfter=3,
+        spaceAfter=2.5,
     )
     styles["BodyBold"] = ParagraphStyle(
         "BodyBold",
         fontName=FONT_BOLD,
-        fontSize=8,
-        leading=11.2,
+        fontSize=7.8,
+        leading=11,
         textColor=C_BLACK,
-        spaceAfter=3,
+        spaceAfter=2.5,
     )
     styles["TableHead"] = ParagraphStyle(
         "TableHead",
         fontName=FONT_BOLD,
-        fontSize=7.5,
-        leading=9.5,
+        fontSize=7.3,
+        leading=9.2,
         textColor=C_BLACK,
     )
     styles["TableCell"] = ParagraphStyle(
         "TableCell",
         fontName=FONT_REGULAR,
-        fontSize=7.5,
-        leading=10,
+        fontSize=7.3,
+        leading=9.8,
         textColor=C_DARK,
     )
     styles["TableCellBold"] = ParagraphStyle(
         "TableCellBold",
         fontName=FONT_BOLD,
-        fontSize=7.5,
-        leading=10,
+        fontSize=7.3,
+        leading=9.8,
         textColor=C_BLACK,
     )
     styles["Code"] = ParagraphStyle(
         "Code",
         fontName="Courier",
-        fontSize=7,
-        leading=9,
+        fontSize=6.8,
+        leading=8.8,
         textColor=C_BLACK,
     )
     styles["MetaBlock"] = ParagraphStyle(
         "MetaBlock",
         fontName=FONT_REGULAR,
-        fontSize=7.8,
-        leading=11,
+        fontSize=7.6,
+        leading=10.8,
         textColor=C_DARK,
     )
     styles["Note"] = ParagraphStyle(
         "Note",
         fontName=FONT_REGULAR,
-        fontSize=7.6,
-        leading=10.5,
+        fontSize=7.4,
+        leading=10.2,
         textColor=C_BLACK,
     )
     return styles
 
 
-def make_plain_table(headers: list[str], rows: list[list], col_widths: list[float], styles, pad_v: float = 2.2) -> Table:
+def make_plain_table(headers: list[str], rows: list[list], col_widths: list[float], styles, pad_v: float = 2.0) -> Table:
     data = [[Paragraph(f"<b>{h}</b>", styles["TableHead"]) for h in headers]]
     for r in rows:
         row_data = []
@@ -247,7 +247,7 @@ def make_plain_table(headers: list[str], rows: list[list], col_widths: list[floa
     return t
 
 
-def make_box(text: str, styles, width: float = 523, pad_v: float = 4) -> Table:
+def make_box(text: str, styles, width: float = 523, pad_v: float = 3.5) -> Table:
     t = Table([[Paragraph(text, styles["Note"])]], colWidths=[width])
     t.setStyle(
         TableStyle([
@@ -256,8 +256,8 @@ def make_box(text: str, styles, width: float = 523, pad_v: float = 4) -> Table:
             ("LINEBEFORE", (0, 0), (0, -1), 2.2, C_BORDER),
             ("TOPPADDING", (0, 0), (-1, -1), pad_v),
             ("BOTTOMPADDING", (0, 0), (-1, -1), pad_v),
-            ("LEFTPADDING", (0, 0), (-1, -1), 7),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 7),
+            ("LEFTPADDING", (0, 0), (-1, -1), 6.5),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 6.5),
         ])
     )
     return t
@@ -277,11 +277,11 @@ def build_progress_paper():
     story = []
 
     # =========================================================================
-    # PAGE 1: TITLE, EXECUTIVE SUMMARY, AND ARCHITECTURE PIPELINE
+    # PAGE 1: TITLE, METADATA, WORK ACCOMPLISHED & TESTING METHODOLOGY
     # =========================================================================
-    story.append(Paragraph("รายงานความคืบหน้าโครงการพัฒนาระบบสื่อสาร ORBITL-1 AX.25", styles["DocTitle"]))
+    story.append(Paragraph("รายงานความคืบหน้า ORBITL-1 AX.25", styles["DocTitle"]))
     story.append(Paragraph("สรุปผลการดำเนินงานและผลการทดสอบระดับซอฟต์แวร์ (Phases 1 – 4 Software Verification Complete)", styles["DocSub"]))
-    story.append(HRFlowable(width="100%", thickness=0.8, color=C_BORDER, spaceBefore=0, spaceAfter=6))
+    story.append(HRFlowable(width="100%", thickness=0.8, color=C_BORDER, spaceBefore=0, spaceAfter=5))
 
     meta_table = Table([
         [
@@ -292,34 +292,14 @@ def build_progress_paper():
     meta_table.setStyle(TableStyle([
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("TOPPADDING", (0, 0), (-1, -1), 1),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
     ]))
     story.append(meta_table)
-    story.append(HRFlowable(width="100%", thickness=0.4, color=C_BORDER_LIGHT, spaceBefore=3, spaceAfter=6))
+    story.append(HRFlowable(width="100%", thickness=0.4, color=C_BORDER_LIGHT, spaceBefore=2.5, spaceAfter=5))
 
-    # SECTION 1: EXECUTIVE SUMMARY
-    story.append(Paragraph("1. บทสรุปผู้บริหารและภาพรวมโครงการ (Executive Summary)", styles["Heading1"]))
-    summary_text = (
-        "โครงการพัฒนาระบบสื่อสารข้อมูลผ่านโปรโตคอล AX.25 สำหรับดาวเทียม ORBITL-1 ได้ดำเนินการพัฒนาและทดสอบยืนยันผล "
-        "ในระดับซอฟต์แวร์ (Software-Complete) ครอบคลุมตั้งแต่ <b>Phase 1 ถึง Phase 4 เสร็จสมบูรณ์ 100%</b> โดยผลการทดสอบอัตโนมัติ "
-        "ผ่านการตรวจรับครบทั้ง <b>95 การทดสอบ</b> (ไม่มีข้อผิดพลาดหรือล้มเหลว) พร้อมทั้งรักษาความสมบูรณ์ของซอร์สโค้ดเดิมในระบบ "
-        "โดยผ่านการตรวจสอบ SHA-256 Checksum ตรงกับค่าเริ่มต้นทุกไฟล์"
-    )
-    story.append(Paragraph(summary_text, styles["Body"]))
-
-    kpi_summary = (
-        "<b>ดัชนีชี้วัดหลักทางวิศวกรรม (Key Engineering Metrics):</b><br/>"
-        "• <b>การทดสอบอัตโนมัติ:</b> 95 / 95 PASS ครอบคลุม Unit Test, Integration, Robustness, Acceptance<br/>"
-        "• <b>การทดสอบความทนทาน:</b> สุ่มส่งข้อมูล (Randomized Round-trips) มากกว่า 1,000 รอบ ไม่พบข้อมูลสูญหาย<br/>"
-        "• <b>ขีดจำกัดขนาดข้อมูล:</b> รองรับ Information Field สูงสุด 4,078 ไบต์ (ภายใต้กรอบจำกัด HDLC 4,096 ไบต์)<br/>"
-        "• <b>ความเร็วประมวลผล (Throughput):</b> ประมวลผลได้ 864 เฟรม/วินาที หรือเทียบเท่า ~1.02 Mbps (เร็วกว่าวิทยุดาวเทียมจริง >100 เท่า)"
-    )
-    story.append(make_box(kpi_summary, styles, width=523, pad_v=4))
-    story.append(Spacer(1, 4))
-
-    # SECTION 2: WORK ACCOMPLISHED
+    # SECTION 2: WORK ACCOMPLISHED (เริ่มที่ข้อ 2 ตามที่ผู้ใช้งานกำหนด)
     story.append(Paragraph("2. รายละเอียดงานที่ได้ดำเนินการไปแล้ว (Work Accomplished: Phases 1 to 4)", styles["Heading1"]))
     story.append(Paragraph("การดำเนินงานแบ่งออกเป็น 4 เฟสหลักตามสถาปัตยกรรมโปรโตคอลการสื่อสารดาวเทียม ดังนี้:", styles["Body"]))
 
@@ -333,23 +313,20 @@ def build_progress_paper():
         ],
         [110, 250, 163],
         styles,
-        pad_v=2.2,
+        pad_v=1.8,
     )
     story.append(work_table)
-    story.append(Spacer(1, 4))
+    story.append(Spacer(1, 3))
 
     flow_text = (
         "<b>ผังกระบวนการส่งและรับข้อมูลครบวงจร (End-to-End Pipeline Data Flow):</b><br/>"
         "• <b>ขาออก (TX):</b> <code>Payload → build_ui_frame() → encode_hdlc() → nrzi_encode() → [บิตระดับสัญญาณ NRZI]</code><br/>"
         "• <b>ขาเข้า (RX):</b> <code>[บิตระดับสัญญาณ NRZI] → feed_nrzi_levels() → nrzi_decode() → HDLCStreamDecoder → Packet Dict</code>"
     )
-    story.append(make_box(flow_text, styles, width=523, pad_v=3.5))
+    story.append(make_box(flow_text, styles, width=523, pad_v=3))
+    story.append(Spacer(1, 4))
 
-    # =========================================================================
-    # PAGE 2: TESTING, INTEROPERABILITY & CODE INTEGRITY
-    # =========================================================================
-    story.append(PageBreak())
-
+    # SECTION 3: TESTING & EVIDENCE
     story.append(Paragraph("3. การทดสอบและผลลัพธ์ (Testing Methodology & Evidence)", styles["Heading1"]))
     story.append(Paragraph(
         "ชุดทดสอบอัตโนมัติถูกจัดแบ่งตามหน้าที่ความรับผิดชอบอย่างชัดเจน รวมทั้งสิ้น <b>95 การทดสอบ</b> "
@@ -370,10 +347,14 @@ def build_progress_paper():
         ],
         [105, 34, 110, 214, 60],
         styles,
-        pad_v=1.6,
+        pad_v=1.5,
     )
     story.append(test_table)
-    story.append(Spacer(1, 4))
+
+    # =========================================================================
+    # PAGE 2: STANDARDS INTEROPERABILITY, BENCHMARKS & DEMARCATION
+    # =========================================================================
+    story.append(PageBreak())
 
     # SECTION 4: STANDARDS INTEROPERABILITY
     story.append(Paragraph("4. หลักฐานการเปรียบเทียบมาตรฐานสากล (Independent Interoperability)", styles["Heading1"]))
@@ -396,10 +377,10 @@ def build_progress_paper():
         ],
         [125, 142, 114, 102, 40],
         styles,
-        pad_v=1.6,
+        pad_v=1.5,
     )
     story.append(interop_table)
-    story.append(Spacer(1, 4))
+    story.append(Spacer(1, 3))
 
     hash_text = (
         "<b>การตรวจสอบความสมบูรณ์ของไฟล์ Runtime ดั้งเดิม (SHA-256 Hash Verification):</b><br/>"
@@ -409,13 +390,10 @@ def build_progress_paper():
         "• <code>src/ax25_transmitter.py</code>: <code>6120408159812b97dfc1612a54c8f58d54bd76c4810d9941ce29280c2029aca8</code> (คงเดิม 100%)<br/>"
         "• <code>src/vendor/mobilinkd/HDLC.py</code>: <code>db5c61e16cbff27cce26d244ed71afffdb4c42c036588c57c990e6754dbe7b36</code> (คงเดิม 100%)"
     )
-    story.append(make_box(hash_text, styles, width=523, pad_v=3))
+    story.append(make_box(hash_text, styles, width=523, pad_v=2.5))
+    story.append(Spacer(1, 4))
 
-    # =========================================================================
-    # PAGE 3: PERFORMANCE BENCHMARKS & DEMARCATION
-    # =========================================================================
-    story.append(PageBreak())
-
+    # SECTION 5: PERFORMANCE BENCHMARK
     story.append(Paragraph("5. ผลการวัดประสิทธิภาพและความเร็ว (Performance Benchmark Results)", styles["Heading1"]))
     story.append(Paragraph(
         "ทำการทดสอบภาระงานต่อเนื่อง (Sustained Workload Benchmark) โดยสตรีมเฟรม AX.25 จำนวน <b>500 เฟรม</b> "
@@ -434,13 +412,13 @@ def build_progress_paper():
         ],
         [125, 135, 138, 125],
         styles,
-        pad_v=2.4,
+        pad_v=1.8,
     )
     story.append(bench_table)
-    story.append(Spacer(1, 5))
+    story.append(Spacer(1, 4))
 
     # SECTION 6: DEMARCATION & NEXT STEPS
-    story.append(Paragraph("6. เส้นแบ่งขอบเขตทางวิศวกรรมและงานขั้นถัดไป (Demarcation & Next Steps)", styles["Heading1"]))
+    story.append(Paragraph("6. เส้นแบ่งขอบเขตทางวิศวกรรม (Engineering Demarcation)", styles["Heading1"]))
     story.append(Paragraph(
         "เพื่อให้เกิดความโปร่งใสทางวิศวกรรม ขอระบุเส้นแบ่งขอบเขตระหว่างซอฟต์แวร์โปรโตคอลที่เสร็จสมบูรณ์ "
         "กับระบบฮาร์ดแวร์วิทยุที่ต้องดำเนินการต่อในเฟสถัดไปอย่างชัดเจน:",
@@ -457,10 +435,14 @@ def build_progress_paper():
         ],
         [110, 58, 175, 180],
         styles,
-        pad_v=2.2,
+        pad_v=1.8,
     )
     story.append(demarc_table)
-    story.append(Spacer(1, 5))
+
+    # =========================================================================
+    # PAGE 3: PHASE 5 PLAN, DELIVERABLES, RF NOTICE & SIGN-OFF
+    # =========================================================================
+    story.append(PageBreak())
 
     phase5_plan = (
         "<b>แผนงานถัดไปใน Phase 5 (TNC / Ground Station Integration):</b><br/>"
@@ -469,13 +451,10 @@ def build_progress_paper():
         "3. <b>Ground Control Interface & Dashboard:</b> ส่งต่อข้อมูลเข้า Ground Software เพื่อแสดงผลขึ้นจอ Real-time และบันทึก Log ลงฐานข้อมูล<br/>"
         "4. <b>Hardware-in-the-Loop (HIL) Testing:</b> ทดสอบเชื่อมต่อ Loopback ผ่านการ์ดเสียง (1200 bps AFSK) และ SDR จริง (9600 bps GFSK)"
     )
-    story.append(make_box(phase5_plan, styles, width=523, pad_v=4))
+    story.append(make_box(phase5_plan, styles, width=523, pad_v=3.5))
+    story.append(Spacer(1, 4))
 
-    # =========================================================================
-    # PAGE 4: DELIVERABLES, RF DISCLAIMER & ACCEPTANCE SIGN-OFF
-    # =========================================================================
-    story.append(PageBreak())
-
+    # SECTION 7: DELIVERABLES
     story.append(Paragraph("7. รายการส่งมอบและเอกสารโครงการ (Deliverables & Artifacts)", styles["Heading1"]))
     story.append(Paragraph("รายการไฟล์ส่งมอบโครงการทั้งหมดได้รับการตรวจสอบความถูกต้องและจัดเก็บเป็นระเบียบ ดังนี้:", styles["Body"]))
 
@@ -485,16 +464,17 @@ def build_progress_paper():
             ["Release ZIP Package", "ORBITL1-AX25_Phases1-4_Release.zip", "~6.8 MB", "แตกไฟล์รันซ้ำใน Clean Env ผ่าน 95/95 ทันที"],
             ["Master Engineering Report", "docs/project/ORBITL1_AX25_Master_Engineering_Report.pdf", "37 kB", "รายงานฉบับเต็ม 5 หน้า รวบรวมข้อมูล Phases 1–4 ครบถ้วน"],
             ["Phase 4 Technical Report", "docs/project/ORBITL1_AX25_Phase4_Technical_Report.pdf", "30 kB", "รายงานเทคนิคเจาะลึก 4 หน้า พร้อมโค้ดและผลการทดสอบ"],
-            ["Presentation Paper (ฉบับนี้)", "docs/project/ORBITL1_AX25_Progress_Presentation_Paper.pdf", "4 หน้า", "เอกสารนำเสนอแบบเปเปอร์ทางการ ขาวดำ สะอาดตา"],
+            ["Presentation Paper (ฉบับนี้)", "docs/project/ORBITL1_AX25_Progress_Presentation_Paper.pdf", "3 หน้า", "เอกสารนำเสนอแบบเปเปอร์ทางการ ขาวดำ สะอาดตา"],
             ["Machine-Readable Summary", "docs/project/test_results.json", "33 kB", "บันทึกผลการทดสอบเชิงเครื่อง 95 รายการและค่า Benchmark"],
         ],
         [145, 225, 45, 108],
         styles,
-        pad_v=2.2,
+        pad_v=1.8,
     )
     story.append(deliv_table)
-    story.append(Spacer(1, 5))
+    story.append(Spacer(1, 4))
 
+    # SECTION 8: RF NOTICE
     story.append(Paragraph("8. ข้อจำกัดและข้อสงวนสิทธิ์ทางฮาร์ดแวร์วิทยุ (Hardware & RF Limitation Notice)", styles["Heading1"]))
     rf_notice = (
         "<b>ข้อกำหนดความซื่อตรงทางวิศวกรรม (Engineering Integrity Disclaimer):</b><br/>"
@@ -507,9 +487,10 @@ def build_progress_paper():
         "• ประสิทธิภาพของลิงก์ RF, อัตราความผิดพลาดของบิตและแพ็กเก็ต (Link Margin, BER/PER & Real-world Reliability)<br/>"
         "<i>หมายเหตุ: ในการก้าวสู่ Phase 5 จำเป็นต้องจัดทำแท่นทดสอบ Hardware-in-the-Loop (HIL) โดยใช้วิทยุจำลองและ attenuator เพื่อวัดค่าก่อนปล่อยสัญญาณขึ้นสู่อวกาศจริง</i>"
     )
-    story.append(make_box(rf_notice, styles, width=523, pad_v=4))
-    story.append(Spacer(1, 5))
+    story.append(make_box(rf_notice, styles, width=523, pad_v=3.5))
+    story.append(Spacer(1, 4))
 
+    # SECTION 9: ACCEPTANCE SIGN-OFF
     story.append(Paragraph("9. การตรวจรับงานและอนุมัติทางวิศวกรรม (Engineering Sign-Off & Acceptance)", styles["Heading1"]))
     signoff_text = (
         "<b>สรุปผลการตรวจรับงาน (Software Acceptance Gate Sign-Off):</b><br/>"
@@ -517,8 +498,8 @@ def build_progress_paper():
         "(รวม 95 การทดสอบ, 0 ข้อผิดพลาด) ซอร์สโค้ดเดิมคงความสมบูรณ์ตาม SHA-256 โครงสร้างไฟล์ในคลังข้อมูลได้รับการจัดระเบียบให้สะอาด เรียบร้อย "
         "พร้อมสำหรับการบูรณาการเข้ากับฮาร์ดแวร์ใน Phase 5 อย่างเป็นทางการ"
     )
-    story.append(make_box(signoff_text, styles, width=523, pad_v=4))
-    story.append(Spacer(1, 6))
+    story.append(make_box(signoff_text, styles, width=523, pad_v=3.5))
+    story.append(Spacer(1, 5))
 
     # Formal Signature block
     sig_data = [
@@ -543,8 +524,8 @@ def build_progress_paper():
         ("BACKGROUND", (0, 0), (-1, 0), C_GRAY_HEADER),
         ("BOX", (0, 0), (-1, -1), 0.6, C_BORDER),
         ("INNERGRID", (0, 0), (-1, -1), 0.35, C_BORDER_LIGHT),
-        ("TOPPADDING", (0, 0), (-1, -1), 3),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+        ("TOPPADDING", (0, 0), (-1, -1), 2.5),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
         ("LEFTPADDING", (0, 0), (-1, -1), 4),
         ("RIGHTPADDING", (0, 0), (-1, -1), 4),
     ]))
