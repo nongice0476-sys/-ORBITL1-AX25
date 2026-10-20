@@ -1,4 +1,4 @@
-"""Build clean, monochrome, academic/engineering technical paper for ORBITL1-AX25 progress presentation.
+"""Build clean, monochrome technical paper for ORBITL1-AX25 progress presentation.
 
 Outputs:
   docs/project/ORBITL1_AX25_Progress_Presentation_Paper.pdf
@@ -93,8 +93,8 @@ class PlainPaperCanvas(canvas.Canvas):
         if self._pageNumber > 1:
             self.setFont(FONT_REGULAR, 7.5)
             self.setFillColor(C_MUTED)
-            self.drawString(36, height - 26, "โครงการดาวเทียม ORBITL-1 • รายงานความคืบหน้า ORBITL-1 AX.25")
-            self.drawRightString(width - 36, height - 26, "PHASES 1–4 SOFTWARE VERIFICATION")
+            self.drawString(36, height - 26, "โครงการดาวเทียม ORBITL-1 - รายงานความคืบหน้า ORBITL-1 AX.25")
+            self.drawRightString(width - 36, height - 26, "ผลการทดสอบระดับซอฟต์แวร์ เฟส 1 - 4")
             self.setStrokeColor(C_BORDER_LIGHT)
             self.setLineWidth(0.5)
             self.line(36, height - 29, width - 36, height - 29)
@@ -106,7 +106,7 @@ class PlainPaperCanvas(canvas.Canvas):
 
         self.setFont(FONT_REGULAR, 7.5)
         self.setFillColor(C_MUTED)
-        self.drawString(36, 19, "เอกสารทางเทคนิคภายใน (Technical Memorandum) — ตรวจสอบระดับซอฟต์แวร์เสร็จสมบูรณ์ 100%")
+        self.drawString(36, 19, "เอกสารรายงานความคืบหน้าโครงการ ORBITL-1 - ตรวจสอบการทำงานของซอฟต์แวร์ผ่าน 100%")
         page_str = f"หน้า {self._pageNumber} จาก {total_pages}"
         self.drawRightString(width - 36, 19, page_str)
 
@@ -119,8 +119,8 @@ def get_paper_styles():
     styles["DocTitle"] = ParagraphStyle(
         "DocTitle",
         fontName=FONT_BOLD,
-        fontSize=15.5,
-        leading=19.5,
+        fontSize=16,
+        leading=20,
         textColor=C_BLACK,
         alignment=1,  # Center
         spaceAfter=3,
@@ -219,7 +219,7 @@ def make_plain_table(headers: list[str], rows: list[list], col_widths: list[floa
         row_data = []
         for c in r:
             if isinstance(c, str):
-                if c in ("PASS", "ผ่าน", "100%", "MATCH", "VERIFIED", "ตรงกันสมบูรณ์", "PASS (29/29)", "PASS (10/10)", "PASS (7/7)", "PASS (18/18)", "PASS (22/22)", "PASS (9/9)", "PASS 100%"):
+                if c in ("PASS", "ผ่าน", "100%", "MATCH", "VERIFIED", "ตรงกัน", "ผ่านครบ 100%", "ผ่าน (29/29)", "ผ่าน (10/10)", "ผ่าน (7/7)", "ผ่าน (18/18)", "ผ่าน (22/22)", "ผ่าน (9/9)"):
                     p = Paragraph(f"<b>{c}</b>", styles["TableCellBold"])
                 else:
                     p = Paragraph(c, styles["TableCell"])
@@ -277,16 +277,16 @@ def build_progress_paper():
     story = []
 
     # =========================================================================
-    # PAGE 1: TITLE, METADATA, WORK ACCOMPLISHED & TESTING METHODOLOGY
+    # PAGE 1: TITLE, METADATA, WORK ACCOMPLISHED & TESTING
     # =========================================================================
     story.append(Paragraph("รายงานความคืบหน้า ORBITL-1 AX.25", styles["DocTitle"]))
-    story.append(Paragraph("สรุปผลการดำเนินงานและผลการทดสอบระดับซอฟต์แวร์ (Phases 1 – 4 Software Verification Complete)", styles["DocSub"]))
+    story.append(Paragraph("สรุปผลการทำงานและผลการทดสอบระบบ (เฟส 1 - 4 ผ่านการทดสอบครบ 100%)", styles["DocSub"]))
     story.append(HRFlowable(width="100%", thickness=0.8, color=C_BORDER, spaceBefore=0, spaceAfter=5))
 
     meta_table = Table([
         [
-            Paragraph("<b>โครงการ:</b> ดาวเทียมวิจัย ORBITL-1 CubeSat<br/><b>ระบบย่อย:</b> Communication Subsystem (AX.25 Track)<br/><b>ภาษาและแพลตฟอร์ม:</b> Python 3.14 (Standard Library Only)", styles["MetaBlock"]),
-            Paragraph("<b>สถานะปัจจุบัน:</b> ผ่านการทดสอบระดับซอฟต์แวร์สมบูรณ์ 100%<br/><b>ผลการทดสอบ:</b> 95 / 95 Tests PASS (0 Failures, 0 Errors)<br/><b>วันที่จัดทำ:</b> 20 ตุลาคม 2026", styles["MetaBlock"]),
+            Paragraph("<b>โครงการ:</b> ดาวเทียมวิจัย ORBITL-1 CubeSat<br/><b>ระบบย่อย:</b> ระบบสื่อสารข้อมูล (AX.25)<br/><b>ภาษาที่ใช้:</b> Python 3.14 (ใช้เฉพาะ Library มาตรฐาน)", styles["MetaBlock"]),
+            Paragraph("<b>สถานะปัจจุบัน:</b> ผ่านการทดสอบระดับซอฟต์แวร์ครบ 100%<br/><b>ผลการทดสอบ:</b> ผ่านทั้งหมด 95 จาก 95 การทดสอบ (ไม่มีข้อผิดพลาด)<br/><b>วันที่จัดทำ:</b> 20 ตุลาคม 2026", styles["MetaBlock"]),
         ]
     ], colWidths=[260, 263])
     meta_table.setStyle(TableStyle([
@@ -299,17 +299,17 @@ def build_progress_paper():
     story.append(meta_table)
     story.append(HRFlowable(width="100%", thickness=0.4, color=C_BORDER_LIGHT, spaceBefore=2.5, spaceAfter=5))
 
-    # SECTION 1: WORK ACCOMPLISHED (รันเลขข้อใหม่เป็น 1)
-    story.append(Paragraph("1. รายละเอียดงานที่ได้ดำเนินการไปแล้ว (Work Accomplished: Phases 1 to 4)", styles["Heading1"]))
-    story.append(Paragraph("การดำเนินงานแบ่งออกเป็น 4 เฟสหลักตามสถาปัตยกรรมโปรโตคอลการสื่อสารดาวเทียม ดังนี้:", styles["Body"]))
+    # SECTION 1: WORK ACCOMPLISHED
+    story.append(Paragraph("1. สรุปงานที่ทำไปแล้ว (เฟส 1 ถึง เฟส 4)", styles["Heading1"]))
+    story.append(Paragraph("การทำงานแบ่งออกเป็น 4 เฟสตามขั้นตอนของระบบสื่อสาร ดังนี้:", styles["Body"]))
 
     work_table = make_plain_table(
-        ["เฟสงาน (Phase)", "ขอบเขตหน้าที่ที่ดำเนินการ", "ผลลัพธ์ที่ได้จากการพัฒนา"],
+        ["เฟสงาน", "สิ่งที่ทำ", "ผลลัพธ์ที่ได้"],
         [
-            ["Phase 1: AX.25 Frame Core", "• สร้างและถอดรหัส AX.25 UI Frame (Control 0x03, PID 0xF0)<br/>• ตรวจสอบ Call Sign 1-6 ตัวอักษร, SSID 0-15 และ Reserved bits<br/>• คำนวณและตรวจสอบ CRC-16/X-25 แบบส่งไบต์ต่ำก่อน (Low-byte first)", "ได้โมดูลสร้าง/ถอดรหัสเฟรมที่มีระบบ Guard ตรวจสอบความถูกต้องอย่างเข้มงวด"],
-            ["Phase 2: HDLC & NRZI Layer", "• แปลงข้อมูลระดับไบต์เป็นสตรีมบิต LSB-first<br/>• ทำระบบ Bit-stuffing (แทรก 0 เมื่อเจอ 1 ติดกัน 5 ตัว) และธง 0x7E<br/>• แปลงระดับสัญญาณบิต NRZI (0 เปลี่ยนสถานะ, 1 คงสถานะ)<br/>• เชื่อมต่อตัวถอดรหัส HDLC จาก Mobilinkd (จำกัดขนาดเฟรม 4,096 ไบต์)", "ได้โมดูลส่งต่อสัญญาณระดับบิตและตัวรับสัญญาณที่กักเก็บสถานะข้าม Chunk ได้"],
-            ["Phase 3: E2E Integration & Standards", "• เชื่อมต่อท่อส่งข้อมูลครบวงรอบ (Payload → NRZI → Packet Dict)<br/>• รองรับการแบ่งส่งข้อมูลขนาดบิตไม่คงที่ (Streaming Chunks 1-128 บิต)<br/>• ตรวจสอบเวกเตอร์มาตรฐานสากล ISO/IEC 3309 และ AX.25 v2.2 Spec<br/>• เขียนโมเดลอ้างอิงอิสระแบบ Pure-Python มาเทียบชนบิตต่อบิต", "ยืนยันความถูกต้องตรงตามมาตรฐานสากล 100% ไม่ใช่แค่โค้ดคุยกันเอง"],
-            ["Phase 4: Reliability & Benchmarks", "• วางระบบป้องกันการรับข้อมูลพัง (Fault Injection Defense)<br/>• ตรวจจับและปฏิเสธเฟรม Control/PID ที่ไม่ถูกต้อง 100%<br/>• ดักจับเฟรมขนาดเกิน (4,079 ไบต์) ป้องกัน Buffer Overflow<br/>• วัด Throughput สตรีมต่อเนื่อง 500 เฟรม ยืนยันความเร็วและเสถียรภาพ Memory", "ได้ระบบที่มีความทนทานสูง พร้อมรองรับสัญญาณรบกวนในอวกาศ"],
+            ["เฟส 1: โครงสร้างเฟรม AX.25", "- สร้างและถอดรหัสแพ็กเกจข้อมูล AX.25 (UI Frame)<br/>- ตรวจสอบชื่อเรียกสถานี (Callsign) และรหัสประจำตัว (SSID)<br/>- คำนวณรหัสตรวจสอบความถูกต้องตามมาตรฐาน (CRC-16)", "ได้ตัวสร้างและอ่านแพ็กเกจข้อมูลที่ตรวจสอบความถูกต้องอย่างรัดกุม"],
+            ["เฟส 2: การจัดการระดับบิต (HDLC & NRZI)", "- แปลงข้อมูลเป็นลำดับบิตและส่งแบบบิตแรกก่อน<br/>- แทรกบิต 0 อัตโนมัติเมื่อเจอบิต 1 ติดกัน 5 ตัวเพื่อแยกเฟรม (Bit Stuffing)<br/>- แปลงระดับสัญญาณ (NRZI) สลับสถานะเมื่อเจอเลข 0<br/>- ถอดรหัสข้อมูลแบบสตรีมต่อเนื่อง พร้อมจำกัดขนาดไม่เกิน 4,096 ไบต์", "ได้ระบบส่งและรับสัญญาณระดับบิตที่ทำงานต่อเนื่องได้อย่างราบรื่น"],
+            ["เฟส 3: เชื่อมต่อระบบและเทียบมาตรฐาน", "- เชื่อมท่อส่งข้อมูลตั้งแต่ต้นทางจนถึงปลายทางครบวงจร<br/>- รองรับการทยอยส่งข้อมูลแบบเป็นก้อนขนาดต่างๆ ได้อย่างแม่นยำ<br/>- ทดสอบเปรียบเทียบกับค่ามาตรฐานสากล<br/>- เขียนระบบจำลองอิสระขึ้นมาตรวจสอบเทียบกันแบบบิตต่อบิต", "มั่นใจได้ว่าระบบทำงานถูกต้องตามมาตรฐานสากล 100%"],
+            ["เฟส 4: ความทนทานและการทดสอบความเร็ว", "- ทดสอบรับมือกับข้อมูลที่เสียหาย เพื่อให้มั่นใจว่าโปรแกรมจะไม่ค้าง<br/>- ดักจับและทิ้งข้อมูลที่รูปแบบผิดหรือขนาดเกินกำหนดทันที<br/>- ทดสอบส่งข้อมูลต่อเนื่อง 500 เฟรมเพื่อวัดความเร็วและการใช้หน่วยความจำ", "ระบบมีความเสถียรสูง พร้อมรับมือกับสัญญาณรบกวนในอวกาศ"],
         ],
         [110, 250, 163],
         styles,
@@ -319,31 +319,31 @@ def build_progress_paper():
     story.append(Spacer(1, 3))
 
     flow_text = (
-        "<b>ผังกระบวนการส่งและรับข้อมูลครบวงจร (End-to-End Pipeline Data Flow):</b><br/>"
-        "• <b>ขาออก (TX):</b> <code>Payload → build_ui_frame() → encode_hdlc() → nrzi_encode() → [บิตระดับสัญญาณ NRZI]</code><br/>"
-        "• <b>ขาเข้า (RX):</b> <code>[บิตระดับสัญญาณ NRZI] → feed_nrzi_levels() → nrzi_decode() → HDLCStreamDecoder → Packet Dict</code>"
+        "<b>ลำดับขั้นตอนการส่งและรับข้อมูลของระบบ:</b><br/>"
+        "- <b>ขาส่ง (TX):</b> ข้อมูลข้อความ -> ประกอบเฟรม AX.25 -> แทรกบิตและใส่ธง HDLC -> แปลงสัญญาณ NRZI -> ลำดับบิตสัญญาณ<br/>"
+        "- <b>ขารับ (RX):</b> ลำดับบิตสัญญาณ -> ถอดสัญญาณ NRZI -> แกะเฟรม HDLC -> อ่านข้อมูล AX.25 -> ได้ข้อมูลเดิมกลับมาครบถ้วน"
     )
     story.append(make_box(flow_text, styles, width=523, pad_v=3))
     story.append(Spacer(1, 4))
 
     # SECTION 2: TESTING & EVIDENCE
-    story.append(Paragraph("2. การทดสอบและผลลัพธ์ (Testing Methodology & Evidence)", styles["Heading1"]))
+    story.append(Paragraph("2. ผลการทดสอบระบบ (ผ่านครบ 95 รายการ)", styles["Heading1"]))
     story.append(Paragraph(
-        "ชุดทดสอบอัตโนมัติถูกจัดแบ่งตามหน้าที่ความรับผิดชอบอย่างชัดเจน รวมทั้งสิ้น <b>95 การทดสอบ</b> "
-        "โดยครอบคลุมทั้งการทำงานปกติ สภาวะขอบเขตจำกัด (Boundary conditions) และการจำลองข้อมูลผิดปกติ (Fault Injection):",
+        "ชุดทดสอบอัตโนมัติถูกจัดแบ่งตามหน้าที่อย่างชัดเจน รวมทั้งหมด <b>95 การทดสอบ</b> "
+        "ครอบคลุมทั้งการทำงานปกติ สภาวะข้อมูลขนาดใหญ่สุด และการจำลองข้อมูลผิดปกติ:",
         styles["Body"],
     ))
 
     test_table = make_plain_table(
-        ["ไฟล์ชุดทดสอบ", "จำนวน", "หมวดหมู่การทดสอบ", "สถานการณ์และกรณีทดสอบที่ครอบคลุม", "ผลการทดสอบ"],
+        ["ไฟล์ชุดทดสอบ", "จำนวน", "หมวดหมู่", "สิ่งที่ทำการทดสอบ", "ผลการทดสอบ"],
         [
-            ["test_ax25_core.py", "29", "Frame & Address Core", "• Address round-trip, Callsign อักษรพิมพ์ใหญ่/เล็ก, SSID 0-15<br/>• เวกเตอร์มาตรฐาน CRC-16 123456789 -> 0x906E<br/>• ปฏิเสธ Control/PID ที่ไม่รองรับ แม้ CRC จะคำนวณมาถูกต้อง", "PASS (29/29)"],
-            ["test_hdlc.py", "10", "HDLC & Bit-level", "• Bit-stuffing แทรก 0 เมื่อเจอ 11111 และ Unstuffing คืนรูปเดิม<br/>• การสลับระดับสัญญาณ NRZI ไป-กลับ ตรงตามตารางเวกเตอร์", "PASS (10/10)"],
-            ["test_receiver.py", "7", "Receive Pipeline", "• เชื่อม NRZI เข้าสู่ Receive Pipeline จำลองการส่งทีละ 7 บิต<br/>• ส่งข้อมูลต่อเนื่อง 2 เฟรมติดกันและกู้คืน Payload ได้ถูกต้อง", "PASS (7/7)"],
-            ["test_reliability.py", "18", "Robustness Baseline", "• กู้คืนอัตโนมัติเมื่อหัว/ท้ายเฟรมขาดหาย (Missing Flags)<br/>• สุ่มทดสอบความถูกต้องไป-กลับ 1,000 รอบต่อเนื่อง ไม่พบข้อผิดพลาด", "PASS (18/18)"],
-            ["test_integration.py", "22", "E2E & Spec Vectors", "• ส่ง Payload มีบิต 1 หนาแน่น (0xFF*50, 0x7E*25) ไม่เกิด False Flag<br/>• แบ่งสตรีมทีละ 1, 2, 3, 5, 7, 11, 13, 17, 31 บิต ไม่หลุดสถานะ<br/>• แกล้งสลับบิต FCS (Bit Flip) เพื่อพิสูจน์ว่าเฟรมเสียถูกทิ้ง 100%", "PASS (22/22)"],
-            ["test_acceptance.py", "9", "Acceptance & Benchmark", "• Multi-seed Testing (Seed 20261009, 20261019, 42, 1337)<br/>• ทดสอบขนาด 4,078 ไบต์ (ผ่าน) และ 4,079 ไบต์ (ปฏิเสธทันที)<br/>• สตรีมต่อเนื่อง 100 เฟรมที่มีเฟรมเสีย/Abort/ขนาดเกินปนเปื้อน", "PASS (9/9)"],
-            ["รวมทั้งหมด", "95", "Cumulative Suite", "ครอบคลุมการทำงานทุกระดับ รันผ่าน 100% ภายในเวลา ~5.88 วินาที", "PASS 100%"],
+            ["test_ax25_core.py", "29", "โครงสร้างเฟรมและที่อยู่", "- ตรวจสอบชื่อเรียกสถานี อักษรพิมพ์ใหญ่/เล็ก, ค่า SSID 0-15<br/>- ทดสอบคำนวณรหัสตรวจสอบความถูกต้องตามมาตรฐาน ได้ค่าตรงกัน<br/>- ปฏิเสธคำสั่งที่ไม่รองรับทันทีเพื่อความปลอดภัยของระบบ", "ผ่าน (29/29)"],
+            ["test_hdlc.py", "10", "การจัดการบิตสัญญาณ", "- การแทรกบิต 0 และการดึงบิต 0 ออก คืนรูปข้อมูลได้ถูกต้อง 100%<br/>- การสลับระดับสัญญาณ NRZI ไป-กลับ ตรงตามตารางอย่างแม่นยำ", "ผ่าน (10/10)"],
+            ["test_receiver.py", "7", "ระบบตัวรับข้อมูล", "- ทดสอบทยอยป้อนสัญญาณทีละ 7 บิต ข้อมูลไม่สูญหาย<br/>- รับส่งข้อมูลต่อเนื่อง 2 เฟรมติดกันและกู้คืนข้อมูลได้ถูกต้อง", "ผ่าน (7/7)"],
+            ["test_reliability.py", "18", "ความเสถียรและการฟื้นตัว", "- กู้คืนการทำงานอัตโนมัติเมื่อหัวหรือท้ายเฟรมขาดหาย<br/>- สุ่มทดสอบรับส่งข้อมูลต่อเนื่อง 1,000 รอบ ไม่พบข้อมูลผิดพลาด", "ผ่าน (18/18)"],
+            ["test_integration.py", "22", "เชื่อมต่อระบบครบวงจร", "- ส่งข้อมูลที่มีบิต 1 หนาแน่นได้ปกติ ไม่เกิดข้อผิดพลาด<br/>- ทยอยส่งข้อมูลทีละ 1, 2, 3, 5, 7 บิต ระบบไม่หลุดการทำงาน<br/>- ทดลองสลับบิตให้ข้อมูลเสีย เพื่อพิสูจน์ว่าระบบดักจับและตัดทิ้งได้จริง", "ผ่าน (22/22)"],
+            ["test_acceptance.py", "9", "การตรวจรับและความเร็ว", "- สุ่มทดสอบด้วยค่าคงที่หลายชุดเพื่อความโปร่งใส<br/>- ทดสอบขนาดข้อมูล 4,078 ไบต์ (ผ่าน) และตัดทิ้งเมื่อขนาดเกิน<br/>- ส่งข้อมูลต่อเนื่อง 100 เฟรมที่มีทั้งข้อมูลดีและเสียปะปนกัน", "ผ่าน (9/9)"],
+            ["สรุปรวมทั้งหมด", "95", "ครอบคลุมทุกส่วน", "ทดสอบครบทุกเงื่อนไข รันผ่าน 100% ภายในเวลาประมาณ 5.8 วินาที", "ผ่านครบ 100%"],
         ],
         [105, 34, 110, 214, 60],
         styles,
@@ -357,23 +357,23 @@ def build_progress_paper():
     story.append(PageBreak())
 
     # SECTION 3: STANDARDS INTEROPERABILITY
-    story.append(Paragraph("3. หลักฐานการเปรียบเทียบมาตรฐานสากล (Independent Interoperability)", styles["Heading1"]))
+    story.append(Paragraph("3. การทดสอบความถูกต้องตามมาตรฐานสากล", styles["Heading1"]))
     story.append(Paragraph(
-        "เพื่อพิสูจน์ความถูกต้องตามหลักวิศวกรรมสากล ระบบได้รับการตรวจสอบเทียบกับเวกเตอร์อ้างอิงจากองค์กรมาตรฐาน "
-        "และสร้างโมเดลอิสระขึ้นมาทดสอบความเข้ากันได้แบบบิตต่อบิต:",
+        "เพื่อให้มั่นใจว่าระบบสามารถทำงานร่วมกับมาตรฐานทั่วไปได้อย่างถูกต้อง "
+        "ได้นำค่าทดสอบตามข้อกำหนดมาตรฐานสากลมาเปรียบเทียบผลลัพธ์แบบบิตต่อบิต:",
         styles["Body"],
     ))
 
     interop_table = make_plain_table(
-        ["มาตรฐานอ้างอิง", "เวกเตอร์ทดสอบ (Input Vector)", "ค่าตามข้อกำหนดมาตรฐาน", "ค่าที่ได้จากโค้ด ORBITL-1", "สถานะ"],
+        ["เกณฑ์อ้างอิง", "ข้อมูลที่ใช้ทดสอบ", "ค่าตามข้อกำหนดมาตรฐาน", "ค่าที่โปรแกรมคำนวณได้", "ผลการเทียบ"],
         [
-            ["ISO/IEC 3309 / ITU-T X.25", "ข้อความ ASCII: '123456789'", "CRC-16 = 0x906E", "0x906E", "ตรงกันสมบูรณ์"],
-            ["ITU-T X.25 Standard", "สตริงว่าง: b''", "CRC-16 = 0x0000", "0x0000", "ตรงกันสมบูรณ์"],
-            ["Catalogue of CRCs (Cook)", "อักขระเดี่ยว: b'A'", "CRC-16 = 0xA3F5", "0xA3F5", "ตรงกันสมบูรณ์"],
-            ["AX.25 v2.2 Spec (§3.12 Fig 3.5)", "Destination 'NJ7P', SSID 0, not last", "9C 94 6E A0 40 40 60", "9C 94 6E A0 40 40 60", "ตรงกันสมบูรณ์"],
-            ["AX.25 v2.2 Spec (§3.12 Fig 3.6)", "Source 'N7LEM', SSID 0, last address", "9C 6E 98 8A 9A 40 61", "9C 6E 98 8A 9A 40 61", "ตรงกันสมบูรณ์"],
-            ["ISO 3309 FCS Residue", "เฟรมที่ถูกต้องต่อท้ายด้วย 2-byte FCS", "ค่าคงที่ตกค้าง = 0xF0B8", "0xF0B8 (Residue Validated)", "ตรงกันสมบูรณ์"],
-            ["Independent Reference Model", "โมเดลอ้างอิงภาษา Python ที่เขียนขึ้นใหม่", "ตรงกันทุกไบต์ ทุกตำแหน่งบิต", "ตรงกัน 100% บิตต่อบิต", "ตรงกันสมบูรณ์"],
+            ["ตามมาตรฐาน", "ข้อความทดสอบ: '123456789'", "ค่าตรวจสอบ = 0x906E", "0x906E", "ตรงกัน"],
+            ["ตามมาตรฐาน", "ข้อมูลว่างเปล่า (ไม่มีข้อมูล)", "ค่าตรวจสอบ = 0x0000", "0x0000", "ตรงกัน"],
+            ["ตามมาตรฐาน", "อักขระเดี่ยว: 'A'", "ค่าตรวจสอบ = 0xA3F5", "0xA3F5", "ตรงกัน"],
+            ["ตามมาตรฐาน AX.25", "สถานีปลายทาง 'NJ7P', รหัส 0", "9C 94 6E A0 40 40 60", "9C 94 6E A0 40 40 60", "ตรงกัน"],
+            ["ตามมาตรฐาน AX.25", "สถานีต้นทาง 'N7LEM', รหัส 0", "9C 6E 98 8A 9A 40 61", "9C 6E 98 8A 9A 40 61", "ตรงกัน"],
+            ["ตามมาตรฐาน", "ตรวจสอบความถูกต้องส่วนท้ายเฟรม", "ค่าคงเหลือตามมาตรฐาน = 0xF0B8", "0xF0B8 (ตรวจสอบผ่าน)", "ตรงกัน"],
+            ["ตัวจำลองอิสระ", "โปรแกรมจำลองภาษา Python ที่เขียนขึ้นเทียบ", "ตรงกันทุกไบต์ ทุกตำแหน่งบิต", "ตรงกันแบบบิตต่อบิต 100%", "ตรงกัน"],
         ],
         [125, 142, 114, 102, 40],
         styles,
@@ -383,32 +383,32 @@ def build_progress_paper():
     story.append(Spacer(1, 3))
 
     hash_text = (
-        "<b>การตรวจสอบความสมบูรณ์ของไฟล์ Runtime ดั้งเดิม (SHA-256 Hash Verification):</b><br/>"
-        "• <code>src/ax25.py</code>: <code>8da3d41a47c8211e482270a554cbb04e046867159dadfb789e8944990e30b9f1</code> (คงเดิม 100%)<br/>"
-        "• <code>src/ax25_hdlc.py</code>: <code>38fbab7afe40a822bbee0ea0b0c5047deede1ab1f05306813e01ff11a4894391</code> (คงเดิม 100%)<br/>"
-        "• <code>src/ax25_receiver.py</code>: <code>7d9b6c1df0af7636f4babdf1e9a980f425045ee63a17c2740f0f3c681bb87d68</code> (คงเดิม 100%)<br/>"
-        "• <code>src/ax25_transmitter.py</code>: <code>6120408159812b97dfc1612a54c8f58d54bd76c4810d9941ce29280c2029aca8</code> (คงเดิม 100%)<br/>"
-        "• <code>src/vendor/mobilinkd/HDLC.py</code>: <code>db5c61e16cbff27cce26d244ed71afffdb4c42c036588c57c990e6754dbe7b36</code> (คงเดิม 100%)"
+        "<b>การตรวจสอบความสมบูรณ์ของไฟล์ต้นฉบับ (SHA-256 Checksum):</b><br/>"
+        "- <code>src/ax25.py</code>: <code>8da3d41a47c8211e482270a554cbb04e046867159dadfb789e8944990e30b9f1</code> (คงเดิม 100%)<br/>"
+        "- <code>src/ax25_hdlc.py</code>: <code>38fbab7afe40a822bbee0ea0b0c5047deede1ab1f05306813e01ff11a4894391</code> (คงเดิม 100%)<br/>"
+        "- <code>src/ax25_receiver.py</code>: <code>7d9b6c1df0af7636f4babdf1e9a980f425045ee63a17c2740f0f3c681bb87d68</code> (คงเดิม 100%)<br/>"
+        "- <code>src/ax25_transmitter.py</code>: <code>6120408159812b97dfc1612a54c8f58d54bd76c4810d9941ce29280c2029aca8</code> (คงเดิม 100%)<br/>"
+        "- <code>src/vendor/mobilinkd/HDLC.py</code>: <code>db5c61e16cbff27cce26d244ed71afffdb4c42c036588c57c990e6754dbe7b36</code> (คงเดิม 100%)"
     )
     story.append(make_box(hash_text, styles, width=523, pad_v=2.5))
     story.append(Spacer(1, 4))
 
     # SECTION 4: PERFORMANCE BENCHMARK
-    story.append(Paragraph("4. ผลการวัดประสิทธิภาพและความเร็ว (Performance Benchmark Results)", styles["Heading1"]))
+    story.append(Paragraph("4. ผลการวัดความเร็วและประสิทธิภาพการทำงาน", styles["Heading1"]))
     story.append(Paragraph(
-        "ทำการทดสอบภาระงานต่อเนื่อง (Sustained Workload Benchmark) โดยสตรีมเฟรม AX.25 จำนวน <b>500 เฟรม</b> "
-        "(ขนาดข้อมูลรวม 74,000 ไบต์ / 592,000 บิต) ผ่านท่อสัญญาณ NRZI และถอดรหัสผ่าน HDLC/AX.25 เต็มรูปแบบ:",
+        "ทำการทดสอบการทำงานต่อเนื่อง โดยส่งข้อมูล AX.25 จำนวน <b>500 เฟรม</b> "
+        "(ขนาดข้อมูลรวม 74,000 ไบต์ หรือ 592,000 บิต) ผ่านระบบแปลงสัญญาณและถอดรหัสเต็มรูปแบบ:",
         styles["Body"],
     ))
 
     bench_table = make_plain_table(
-        ["ดัชนีชี้วัดประสิทธิภาพ", "ค่าที่วัดได้จริง (Measured)", "เปรียบเทียบกับวิทยุดาวเทียม", "ความหมายทางวิศวกรรม"],
+        ["รายการที่วัด", "ผลที่วัดได้จริง", "เทียบกับวิทยุดาวเทียม", "ความหมาย"],
         [
-            ["จำนวนเฟรมที่ทดสอบ", "500 เฟรม (เฟรมละ 128 ไบต์)", "เทียบเท่าข้อมูลเทเลเมทรีประมาณ 10 นาที", "ครอบคลุมปริมาณข้อมูลทั้ง Pass ของสถานีภาคพื้น"],
-            ["เวลาประมวลผลรวม", "0.579 วินาที", "เฉลี่ย ~1.15 มิลลิวินาที ต่อ 1 เฟรม", "ทำงานแบบ Real-time ไม่มีอาการหน่วงหรือสะสมคิว"],
-            ["อัตราการรับเฟรม", "864.0 เฟรม / วินาที", "อัตราส่งวิทยุปกติ: 0.1 - 2 เฟรม / วินาที", "ความเร็วซอฟต์แวร์เร็วกว่าอัตราส่งวิทยุจริง >400 เท่า"],
-            ["อัตราข้อมูล Throughput", "1,022.98 kbps (~1.02 Mbps)", "วิทยุ CubeSat: 1.2 kbps (AFSK) / 9.6 kbps (GFSK)", "มีขีดความสามารถรองรับข้อมูลเหลือเฟือ (>100x Headroom)"],
-            ["เสถียรภาพ Memory", "คงที่สมบูรณ์ (Zero Leak)", "รันต่อเนื่องหลายพันเฟรม Memory ไม่บวม", "ปลอดภัยสำหรับรันเป็น Background Daemon บนสถานีภาคพื้น"],
+            ["จำนวนข้อมูลที่ทดสอบ", "500 เฟรม (เฟรมละ 128 ไบต์)", "เทียบเท่าข้อมูลดาวเทียมประมาณ 10 นาที", "รองรับปริมาณข้อมูลได้ครบทั้งรอบการโคจร"],
+            ["เวลาที่ใช้ประมวลผล", "0.579 วินาที", "เฉลี่ยประมาณ 1.15 มิลลิวินาที ต่อเฟรม", "ทำงานเร็วมาก ไม่มีอาการหน่วงหรือสะสมคิว"],
+            ["อัตราการรับข้อมูล", "864.0 เฟรม ต่อ วินาที", "การส่งวิทยุปกติ: 0.1 - 2 เฟรม ต่อ วินาที", "เร็วกว่าอัตราส่งวิทยุจริงมากกว่า 400 เท่า"],
+            ["ความเร็วในการรับส่ง", "1,022.98 kbps (ประมาณ 1.02 Mbps)", "วิทยุดาวเทียม CubeSat: 1.2 kbps ถึง 9.6 kbps", "รองรับข้อมูลได้เหลือเฟือ (เร็วกว่าวิทยุจริง 100 เท่า)"],
+            ["การใช้หน่วยความจำ", "คงที่สม่ำเสมอ (ไม่มี Memory Leak)", "รันต่อเนื่องหลายพันรอบ เมมโมรี่ไม่บวม", "ปลอดภัยสำหรับเปิดทำงานทิ้งไว้บนสถานีภาคพื้น"],
         ],
         [125, 135, 138, 125],
         styles,
@@ -418,20 +418,20 @@ def build_progress_paper():
     story.append(Spacer(1, 4))
 
     # SECTION 5: DEMARCATION & NEXT STEPS
-    story.append(Paragraph("5. เส้นแบ่งขอบเขตทางวิศวกรรม (Engineering Demarcation)", styles["Heading1"]))
+    story.append(Paragraph("5. ขอบเขตการทำงาน (ซอฟต์แวร์ vs วิทยุจริง)", styles["Heading1"]))
     story.append(Paragraph(
-        "เพื่อให้เกิดความโปร่งใสทางวิศวกรรม ขอระบุเส้นแบ่งขอบเขตระหว่างซอฟต์แวร์โปรโตคอลที่เสร็จสมบูรณ์ "
-        "กับระบบฮาร์ดแวร์วิทยุที่ต้องดำเนินการต่อในเฟสถัดไปอย่างชัดเจน:",
+        "เพื่อความชัดเจนในการทำงาน ขอยืนยันขอบเขตส่วนที่ซอฟต์แวร์ทำเสร็จแล้ว "
+        "กับส่วนที่ต้องทำต่อกับวิทยุจริงในเฟสถัดไป ดังนี้:",
         styles["Body"],
     ))
 
     demarc_table = make_plain_table(
-        ["ระดับชั้นการทำงาน (Layer)", "สถานะ", "ขอบเขตที่ซอฟต์แวร์ดำเนินการเสร็จแล้ว", "ขอบเขตที่ต้องดำเนินการต่อบนฮาร์ดแวร์ RF จริง"],
+        ["ส่วนของระบบ", "สถานะ", "ส่วนที่ซอฟต์แวร์ทำเสร็จแล้ว", "ส่วนที่ต้องต่อกับวิทยุจริง"],
         [
-            ["Data Link Layer (AX.25)", "เสร็จ 100%", "• เข้า/ถอดรหัส Address, Control 0x03, PID 0xF0<br/>• คำนวณและตรวจสอบ CRC-16/X-25", "• กำหนด Payload Schema ของภารกิจใน Information Field"],
-            ["Framing Layer (HDLC)", "เสร็จ 100%", "• Bit-stuffing, ธง 0x7E, ตรวจจับ Abort sequence<br/>• ตรวจจับและกักขนาด Buffer ไม่เกิน 4096 ไบต์", "• การเชื่อมต่อกับชิปโมเด็มหรือ TNC Hardware"],
-            ["Line Coding (NRZI)", "เสร็จ 100%", "• แปลงบิต 0/1 สลับสัญญาณ NRZI<br/>• จัดการสตรีมมิ่งบิตแบบก้อนเล็ก (Chunking)", "• การตรวจสอบการกลับขั้วบิต (Bit Polarity Inversion)"],
-            ["Physical / RF Layer", "รอ Phase 5+", "• รับเฉพาะสตรีมบิต 0/1 ที่ผ่านการ Demodulate แล้ว", "• Carrier Recovery, Symbol Clock Sync, Doppler Shift (±3.5 kHz)<br/>• SDR Demodulation (IQ/Audio) และการวัดค่า BER/PER"],
+            ["จัดการข้อมูล (AX.25)", "เสร็จ 100%", "- สร้างและถอดรหัสข้อมูล, ตรวจสอบความถูกต้อง<br/>- คำนวณรหัสตรวจสอบข้อผิดพลาด", "- กำหนดรูปแบบข้อมูลเซนเซอร์ที่จะส่งจริงในภารกิจ"],
+            ["จัดการเฟรม (HDLC)", "เสร็จ 100%", "- แทรกบิต, กำกับหัวท้ายเฟรม, ดักจับข้อผิดพลาด<br/>- จำกัดขนาดข้อมูลไม่ให้เกิน 4,096 ไบต์", "- การเชื่อมต่อเข้ากับโมเด็มหรืออุปกรณ์ TNC"],
+            ["สัญญาณดิจิทัล (NRZI)", "เสร็จ 100%", "- แปลงระดับสัญญาณบิต 0/1 สลับไปมาตามข้อมูล<br/>- จัดการรับส่งข้อมูลแบบสตรีมทีละก้อน", "- ตรวจสอบการกลับขั้วสัญญาณจากตัวรับ"],
+            ["คลื่นวิทยุ (RF Layer)", "รอทำเฟส 5", "- รับข้อมูลที่ผ่านการถอดรหัสสัญญาณมาแล้ว", "- การจูนคลื่นวิทยุ, แก้ความถี่เพี้ยน (Doppler Effect)<br/>- การทดสอบวัดคุณภาพสัญญาณวิทยุจริงในสนาม"],
         ],
         [110, 58, 175, 180],
         styles,
@@ -445,29 +445,29 @@ def build_progress_paper():
     story.append(PageBreak())
 
     phase5_plan = (
-        "<b>แผนงานถัดไปใน Phase 5 (TNC / Ground Station Integration):</b><br/>"
-        "1. <b>KISS TNC Protocol Adapter:</b> สร้างตัวเชื่อมต่อโปรโตคอล KISS (Serial COM Port / TCP Port 8001) เพื่อคุยกับ TNC จริงหรือ Dire Wolf<br/>"
-        "2. <b>Mission Telemetry Schema Mapping:</b> กำหนดฟอร์แมตข้อมูลใน Information Field (Packet Type, Sequence, Timestamp, แบตเตอรี่, เซนเซอร์)<br/>"
-        "3. <b>Ground Control Interface & Dashboard:</b> ส่งต่อข้อมูลเข้า Ground Software เพื่อแสดงผลขึ้นจอ Real-time และบันทึก Log ลงฐานข้อมูล<br/>"
-        "4. <b>Hardware-in-the-Loop (HIL) Testing:</b> ทดสอบเชื่อมต่อ Loopback ผ่านการ์ดเสียง (1200 bps AFSK) และ SDR จริง (9600 bps GFSK)"
+        "<b>แผนงานขั้นต่อไปในเฟส 5 (เชื่อมต่อวิทยุและสถานีภาคพื้น):</b><br/>"
+        "1. <b>ทำตัวเชื่อมต่อ KISS Protocol:</b> เพื่อให้คุยกับวิทยุ TNC จริงหรือโปรแกรม Dire Wolf ผ่านพอร์ต Serial หรือ TCP ได้<br/>"
+        "2. <b>กำหนดรูปแบบข้อมูลดาวเทียม:</b> จัดวางตำแหน่งข้อมูลสถานะแบตเตอรี่ อุณหภูมิ และเซนเซอร์ต่างๆ ในตัวข้อมูล<br/>"
+        "3. <b>เชื่อมต่อหน้าจอควบคุมภาคพื้น:</b> ส่งข้อมูลเข้าโปรแกรมควบคุมภาคพื้นเพื่อแสดงผลแบบเรียลไทม์ และบันทึกลงฐานข้อมูล<br/>"
+        "4. <b>ทดสอบกับอุปกรณ์จริง (Hardware-in-the-Loop):</b> ทดสอบเชื่อมต่อผ่านการ์ดเสียงและอุปกรณ์วิทยุ SDR จำลองการส่งสัญญาณจริง"
     )
     story.append(make_box(phase5_plan, styles, width=523, pad_v=3.5))
     story.append(Spacer(1, 4))
 
     # SECTION 6: DELIVERABLES
-    story.append(Paragraph("6. รายการส่งมอบและเอกสารโครงการ (Deliverables & Artifacts)", styles["Heading1"]))
-    story.append(Paragraph("รายการไฟล์ส่งมอบโครงการทั้งหมดได้รับการตรวจสอบความถูกต้องและจัดเก็บเป็นระเบียบ ดังนี้:", styles["Body"]))
+    story.append(Paragraph("6. รายการไฟล์และเอกสารที่ส่งมอบ", styles["Heading1"]))
+    story.append(Paragraph("ไฟล์งานทั้งหมดได้รับการตรวจสอบความถูกต้องและจัดเก็บเรียบร้อยแล้ว ดังนี้:", styles["Body"]))
 
     deliv_table = make_plain_table(
-        ["รายการไฟล์ส่งมอบ", "ที่อยู่ไฟล์ในระบบ (Path)", "ขนาดไฟล์", "การตรวจสอบและยืนยัน"],
+        ["รายการไฟล์ส่งมอบ", "ตำแหน่งไฟล์ในระบบ", "ขนาดไฟล์", "หมายเหตุ"],
         [
-            ["Release ZIP Package", "ORBITL1-AX25_Phases1-4_Release.zip", "~6.8 MB", "แตกไฟล์รันซ้ำใน Clean Env ผ่าน 95/95 ทันที"],
-            ["Master Engineering Report", "docs/project/ORBITL1_AX25_Master_Engineering_Report.pdf", "37 kB", "รายงานฉบับเต็ม 5 หน้า รวบรวมข้อมูล Phases 1–4 ครบถ้วน"],
-            ["Phase 4 Technical Report", "docs/project/ORBITL1_AX25_Phase4_Technical_Report.pdf", "30 kB", "รายงานเทคนิคเจาะลึก 4 หน้า พร้อมโค้ดและผลการทดสอบ"],
-            ["Presentation Paper (ฉบับนี้)", "docs/project/ORBITL1_AX25_Progress_Presentation_Paper.pdf", "3 หน้า", "เอกสารนำเสนอแบบเปเปอร์ทางการ ขาวดำ สะอาดตา"],
-            ["Machine-Readable Summary", "docs/project/test_results.json", "33 kB", "บันทึกผลการทดสอบเชิงเครื่อง 95 รายการและค่า Benchmark"],
+            ["Release ZIP Package", "ORBITL1-AX25_Phases1-4_Release.zip", "ประมาณ 6.8 MB", "แตกไฟล์รันเทสซ้ำผ่านครบ 95 ข้อทันที"],
+            ["Master Engineering Report", "docs/project/ORBITL1_AX25_Master_Engineering_Report.pdf", "37 kB", "รายงานฉบับเต็ม รวมข้อมูลเฟส 1 ถึง 4 ครบถ้วน"],
+            ["Phase 4 Technical Report", "docs/project/ORBITL1_AX25_Phase4_Technical_Report.pdf", "30 kB", "รายงานเทคนิคเจาะลึกเฟส 4 พร้อมผลการทดสอบ"],
+            ["สรุปนำเสนอ (ฉบับนี้)", "docs/project/ORBITL1_AX25_Progress_Presentation_Paper.pdf", "3 หน้า", "เอกสารนำเสนอแบบเปเปอร์ทางการ อ่านง่าย ขาวดำ สะอาดตา"],
+            ["บันทึกผลการทดสอบเชิงเครื่อง", "docs/project/test_results.json", "33 kB", "บันทึกผลการทดสอบ 95 ข้อในรูปแบบ JSON"],
         ],
-        [145, 225, 45, 108],
+        [145, 225, 55, 98],
         styles,
         pad_v=1.8,
     )
@@ -475,28 +475,28 @@ def build_progress_paper():
     story.append(Spacer(1, 4))
 
     # SECTION 7: RF NOTICE
-    story.append(Paragraph("7. ข้อจำกัดและข้อสงวนสิทธิ์ทางฮาร์ดแวร์วิทยุ (Hardware & RF Limitation Notice)", styles["Heading1"]))
+    story.append(Paragraph("7. ข้อควรรู้เกี่ยวกับฮาร์ดแวร์วิทยุ", styles["Heading1"]))
     rf_notice = (
-        "<b>ข้อกำหนดความซื่อตรงทางวิศวกรรม (Engineering Integrity Disclaimer):</b><br/>"
-        "แม้ผลการทดสอบระดับซอฟต์แวร์จะผ่านการยืนยันผล 100% แต่<b>ยังไม่ถือเป็นการพร้อมใช้งานบนคลื่นวิทยุจริง (RF Ready)</b> "
-        "จนกว่าจะได้รับการทดสอบร่วมกับอุปกรณ์ฮาร์ดแวร์ภาคสนาม โดยรายการดังต่อไปนี้ถูกกำหนดเป็น <u>สถานะยังไม่ผ่านการทดสอบจริง (Unverified)</u>:<br/>"
-        "• การเชื่อมต่อกับชิปโมเด็มหรือฮาร์ดแวร์ SDR จริง (Real SDR/Modem Interoperability)<br/>"
-        "• ความเข้ากันได้ของสัญญาณเสียงหรือสัญญาณ Baseband IQ (Audio / IQ Sample-path Compatibility)<br/>"
-        "• การกู้คืนสัญญาณนาฬิกาและจังหวะของสัญลักษณ์ (Symbol / Bit Timing & Clock Recovery)<br/>"
-        "• การเบี่ยงเบนความถี่ การกรองสัญญาณ และอัตราสุ่มตัวอย่าง (Frequency Deviation, Filtering & Sample-rate)<br/>"
-        "• ประสิทธิภาพของลิงก์ RF, อัตราความผิดพลาดของบิตและแพ็กเก็ต (Link Margin, BER/PER & Real-world Reliability)<br/>"
-        "<i>หมายเหตุ: ในการก้าวสู่ Phase 5 จำเป็นต้องจัดทำแท่นทดสอบ Hardware-in-the-Loop (HIL) โดยใช้วิทยุจำลองและ attenuator เพื่อวัดค่าก่อนปล่อยสัญญาณขึ้นสู่อวกาศจริง</i>"
+        "<b>ข้อชี้แจงเพื่อความโปร่งใสทางวิศวกรรม:</b><br/>"
+        "แม้ว่าระบบซอฟต์แวร์จะผ่านการทดสอบยืนยันผลครบ 100% แล้ว แต่<b>ยังไม่ได้ทดสอบกับคลื่นวิทยุจริง</b> "
+        "โดยรายการด้านล่างนี้ถูกกำหนดให้เป็นส่วนที่ต้องนำไปทดสอบกับอุปกรณ์จริงในเฟส 5:<br/>"
+        "- การเชื่อมต่อสายสัญญาณกับอุปกรณ์วิทยุหรือกล่อง TNC จริง<br/>"
+        "- สัญญาณเสียงจากวิทยุและการปรับระดับความดัง (Audio Levels / Baseband IQ)<br/>"
+        "- การกู้คืนสัญญาณนาฬิกาและจังหวะของสัญญาณวิทยุ (Clock Recovery)<br/>"
+        "- การเบี่ยงเบนความถี่จากการเคลื่อนที่ของดาวเทียม (Doppler Effect ประมาณ +/- 3.5 kHz)<br/>"
+        "- การทดสอบระยะทางจริง และการสูญหายของสัญญาณในอากาศ (Link Margin, BER/PER)<br/>"
+        "<i>หมายเหตุ: ในเฟส 5 จะมีการจำลองต่อสายวิทยุ (Hardware-in-the-Loop) เพื่อทดสอบให้ครบถ้วนก่อนนำไปยิงสัญญาณจริง</i>"
     )
     story.append(make_box(rf_notice, styles, width=523, pad_v=3.5))
     story.append(Spacer(1, 4))
 
     # SECTION 8: ACCEPTANCE SIGN-OFF
-    story.append(Paragraph("8. การตรวจรับงานและอนุมัติทางวิศวกรรม (Engineering Sign-Off & Acceptance)", styles["Heading1"]))
+    story.append(Paragraph("8. สรุปผลการตรวจรับงาน", styles["Heading1"]))
     signoff_text = (
-        "<b>สรุปผลการตรวจรับงาน (Software Acceptance Gate Sign-Off):</b><br/>"
-        "ระบบโปรโตคอล AX.25 สำหรับโครงการดาวเทียม ORBITL-1 ในส่วน <b>Phase 1 ถึง Phase 4 ผ่านเกณฑ์การทดสอบระดับซอฟต์แวร์เสร็จสมบูรณ์ 100%</b> "
-        "(รวม 95 การทดสอบ, 0 ข้อผิดพลาด) ซอร์สโค้ดเดิมคงความสมบูรณ์ตาม SHA-256 โครงสร้างไฟล์ในคลังข้อมูลได้รับการจัดระเบียบให้สะอาด เรียบร้อย "
-        "พร้อมสำหรับการบูรณาการเข้ากับฮาร์ดแวร์ใน Phase 5 อย่างเป็นทางการ"
+        "<b>สรุปผลการส่งมอบงานระดับซอฟต์แวร์:</b><br/>"
+        "ระบบโปรโตคอล AX.25 สำหรับโครงการดาวเทียม ORBITL-1 ในส่วน <b>เฟส 1 ถึง เฟส 4 ผ่านเกณฑ์การทดสอบระดับซอฟต์แวร์เรียบร้อย 100%</b> "
+        "(ผ่านครบทั้ง 95 การทดสอบ ไม่มีข้อผิดพลาด) โค้ดเดิมได้รับการรักษาไว้สมบูรณ์ตรงตามค่าตรวจสอบ SHA-256 "
+        "และจัดเก็บไฟล์อย่างเป็นระเบียบ พร้อมสำหรับการนำไปเชื่อมต่อกับวิทยุในเฟส 5 ต่อไปอย่างเป็นทางการ"
     )
     story.append(make_box(signoff_text, styles, width=523, pad_v=3.5))
     story.append(Spacer(1, 5))
@@ -504,14 +504,14 @@ def build_progress_paper():
     # Formal Signature block
     sig_data = [
         [
-            Paragraph("<b>จัดทำโดย (Prepared by):</b>", styles["TableHead"]),
-            Paragraph("<b>ตรวจสอบทางเทคนิค (Reviewed by):</b>", styles["TableHead"]),
-            Paragraph("<b>อนุมัติการตรวจรับ (Approved by):</b>", styles["TableHead"]),
+            Paragraph("<b>ผู้จัดทำ:</b>", styles["TableHead"]),
+            Paragraph("<b>ผู้ตรวจสอบทางเทคนิค:</b>", styles["TableHead"]),
+            Paragraph("<b>ผู้อนุมัติการตรวจรับ:</b>", styles["TableHead"]),
         ],
         [
             Paragraph("วิศวกรระบบสื่อสารดาวเทียม<br/>(Communication Protocol Engineer)<br/>วันที่: 20 ตุลาคม 2026", styles["TableCell"]),
             Paragraph("วิศวกรสถาปัตยกรรมระบบ<br/>(Satellite Systems Architect)<br/>วันที่: 20 ตุลาคม 2026", styles["TableCell"]),
-            Paragraph("หัวหน้าโครงการ ORBITL-1<br/>(Mission Project Manager)<br/>สถานะ: <b>ACCEPTED (PASS)</b>", styles["TableCell"]),
+            Paragraph("หัวหน้าโครงการ ORBITL-1<br/>(Mission Project Manager)<br/>สถานะ: <b>ผ่านการตรวจรับ (ACCEPTED)</b>", styles["TableCell"]),
         ],
         [
             Paragraph("ลงชื่อ: ______________________", styles["TableCell"]),
