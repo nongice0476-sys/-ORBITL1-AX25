@@ -299,8 +299,8 @@ def build_progress_paper():
     story.append(meta_table)
     story.append(HRFlowable(width="100%", thickness=0.4, color=C_BORDER_LIGHT, spaceBefore=2.5, spaceAfter=5))
 
-    # SECTION 2: WORK ACCOMPLISHED (เริ่มที่ข้อ 2 ตามที่ผู้ใช้งานกำหนด)
-    story.append(Paragraph("2. รายละเอียดงานที่ได้ดำเนินการไปแล้ว (Work Accomplished: Phases 1 to 4)", styles["Heading1"]))
+    # SECTION 1: WORK ACCOMPLISHED (รันเลขข้อใหม่เป็น 1)
+    story.append(Paragraph("1. รายละเอียดงานที่ได้ดำเนินการไปแล้ว (Work Accomplished: Phases 1 to 4)", styles["Heading1"]))
     story.append(Paragraph("การดำเนินงานแบ่งออกเป็น 4 เฟสหลักตามสถาปัตยกรรมโปรโตคอลการสื่อสารดาวเทียม ดังนี้:", styles["Body"]))
 
     work_table = make_plain_table(
@@ -326,8 +326,8 @@ def build_progress_paper():
     story.append(make_box(flow_text, styles, width=523, pad_v=3))
     story.append(Spacer(1, 4))
 
-    # SECTION 3: TESTING & EVIDENCE
-    story.append(Paragraph("3. การทดสอบและผลลัพธ์ (Testing Methodology & Evidence)", styles["Heading1"]))
+    # SECTION 2: TESTING & EVIDENCE
+    story.append(Paragraph("2. การทดสอบและผลลัพธ์ (Testing Methodology & Evidence)", styles["Heading1"]))
     story.append(Paragraph(
         "ชุดทดสอบอัตโนมัติถูกจัดแบ่งตามหน้าที่ความรับผิดชอบอย่างชัดเจน รวมทั้งสิ้น <b>95 การทดสอบ</b> "
         "โดยครอบคลุมทั้งการทำงานปกติ สภาวะขอบเขตจำกัด (Boundary conditions) และการจำลองข้อมูลผิดปกติ (Fault Injection):",
@@ -356,8 +356,8 @@ def build_progress_paper():
     # =========================================================================
     story.append(PageBreak())
 
-    # SECTION 4: STANDARDS INTEROPERABILITY
-    story.append(Paragraph("4. หลักฐานการเปรียบเทียบมาตรฐานสากล (Independent Interoperability)", styles["Heading1"]))
+    # SECTION 3: STANDARDS INTEROPERABILITY
+    story.append(Paragraph("3. หลักฐานการเปรียบเทียบมาตรฐานสากล (Independent Interoperability)", styles["Heading1"]))
     story.append(Paragraph(
         "เพื่อพิสูจน์ความถูกต้องตามหลักวิศวกรรมสากล ระบบได้รับการตรวจสอบเทียบกับเวกเตอร์อ้างอิงจากองค์กรมาตรฐาน "
         "และสร้างโมเดลอิสระขึ้นมาทดสอบความเข้ากันได้แบบบิตต่อบิต:",
@@ -393,8 +393,8 @@ def build_progress_paper():
     story.append(make_box(hash_text, styles, width=523, pad_v=2.5))
     story.append(Spacer(1, 4))
 
-    # SECTION 5: PERFORMANCE BENCHMARK
-    story.append(Paragraph("5. ผลการวัดประสิทธิภาพและความเร็ว (Performance Benchmark Results)", styles["Heading1"]))
+    # SECTION 4: PERFORMANCE BENCHMARK
+    story.append(Paragraph("4. ผลการวัดประสิทธิภาพและความเร็ว (Performance Benchmark Results)", styles["Heading1"]))
     story.append(Paragraph(
         "ทำการทดสอบภาระงานต่อเนื่อง (Sustained Workload Benchmark) โดยสตรีมเฟรม AX.25 จำนวน <b>500 เฟรม</b> "
         "(ขนาดข้อมูลรวม 74,000 ไบต์ / 592,000 บิต) ผ่านท่อสัญญาณ NRZI และถอดรหัสผ่าน HDLC/AX.25 เต็มรูปแบบ:",
@@ -417,8 +417,8 @@ def build_progress_paper():
     story.append(bench_table)
     story.append(Spacer(1, 4))
 
-    # SECTION 6: DEMARCATION & NEXT STEPS
-    story.append(Paragraph("6. เส้นแบ่งขอบเขตทางวิศวกรรม (Engineering Demarcation)", styles["Heading1"]))
+    # SECTION 5: DEMARCATION & NEXT STEPS
+    story.append(Paragraph("5. เส้นแบ่งขอบเขตทางวิศวกรรม (Engineering Demarcation)", styles["Heading1"]))
     story.append(Paragraph(
         "เพื่อให้เกิดความโปร่งใสทางวิศวกรรม ขอระบุเส้นแบ่งขอบเขตระหว่างซอฟต์แวร์โปรโตคอลที่เสร็จสมบูรณ์ "
         "กับระบบฮาร์ดแวร์วิทยุที่ต้องดำเนินการต่อในเฟสถัดไปอย่างชัดเจน:",
@@ -454,8 +454,8 @@ def build_progress_paper():
     story.append(make_box(phase5_plan, styles, width=523, pad_v=3.5))
     story.append(Spacer(1, 4))
 
-    # SECTION 7: DELIVERABLES
-    story.append(Paragraph("7. รายการส่งมอบและเอกสารโครงการ (Deliverables & Artifacts)", styles["Heading1"]))
+    # SECTION 6: DELIVERABLES
+    story.append(Paragraph("6. รายการส่งมอบและเอกสารโครงการ (Deliverables & Artifacts)", styles["Heading1"]))
     story.append(Paragraph("รายการไฟล์ส่งมอบโครงการทั้งหมดได้รับการตรวจสอบความถูกต้องและจัดเก็บเป็นระเบียบ ดังนี้:", styles["Body"]))
 
     deliv_table = make_plain_table(
@@ -474,8 +474,8 @@ def build_progress_paper():
     story.append(deliv_table)
     story.append(Spacer(1, 4))
 
-    # SECTION 8: RF NOTICE
-    story.append(Paragraph("8. ข้อจำกัดและข้อสงวนสิทธิ์ทางฮาร์ดแวร์วิทยุ (Hardware & RF Limitation Notice)", styles["Heading1"]))
+    # SECTION 7: RF NOTICE
+    story.append(Paragraph("7. ข้อจำกัดและข้อสงวนสิทธิ์ทางฮาร์ดแวร์วิทยุ (Hardware & RF Limitation Notice)", styles["Heading1"]))
     rf_notice = (
         "<b>ข้อกำหนดความซื่อตรงทางวิศวกรรม (Engineering Integrity Disclaimer):</b><br/>"
         "แม้ผลการทดสอบระดับซอฟต์แวร์จะผ่านการยืนยันผล 100% แต่<b>ยังไม่ถือเป็นการพร้อมใช้งานบนคลื่นวิทยุจริง (RF Ready)</b> "
@@ -490,8 +490,8 @@ def build_progress_paper():
     story.append(make_box(rf_notice, styles, width=523, pad_v=3.5))
     story.append(Spacer(1, 4))
 
-    # SECTION 9: ACCEPTANCE SIGN-OFF
-    story.append(Paragraph("9. การตรวจรับงานและอนุมัติทางวิศวกรรม (Engineering Sign-Off & Acceptance)", styles["Heading1"]))
+    # SECTION 8: ACCEPTANCE SIGN-OFF
+    story.append(Paragraph("8. การตรวจรับงานและอนุมัติทางวิศวกรรม (Engineering Sign-Off & Acceptance)", styles["Heading1"]))
     signoff_text = (
         "<b>สรุปผลการตรวจรับงาน (Software Acceptance Gate Sign-Off):</b><br/>"
         "ระบบโปรโตคอล AX.25 สำหรับโครงการดาวเทียม ORBITL-1 ในส่วน <b>Phase 1 ถึง Phase 4 ผ่านเกณฑ์การทดสอบระดับซอฟต์แวร์เสร็จสมบูรณ์ 100%</b> "
