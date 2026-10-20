@@ -1,0 +1,893 @@
+{
+  "timestamp_iso": "2026-10-19T15:50:31Z",
+  "python_version": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "total_tests": 95,
+  "passed": 95,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "total_duration_sec": 5.92,
+  "success": true,
+  "file_hashes": {
+    "src/ax25.py": "8da3d41a47c8211e482270a554cbb04e046867159dadfb789e8944990e30b9f1",
+    "src/ax25_hdlc.py": "38fbab7afe40a822bbee0ea0b0c5047deede1ab1f05306813e01ff11a4894391",
+    "src/ax25_receiver.py": "7d9b6c1df0af7636f4babdf1e9a980f425045ee63a17c2740f0f3c681bb87d68",
+    "src/ax25_transmitter.py": "6120408159812b97dfc1612a54c8f58d54bd76c4810d9941ce29280c2029aca8",
+    "src/vendor/mobilinkd/CRC.py": "6717e22099e38177351b215565efd9539a686fe341a5838b96509f9aefb0481a",
+    "src/vendor/mobilinkd/HDLC.py": "db5c61e16cbff27cce26d244ed71afffdb4c42c036588c57c990e6754dbe7b36",
+    "src/vendor/mobilinkd/LICENSE": "0e95b2f5f69e2e17b8c429d43b166e2ebc72704f9040cc9db34774ef65907450",
+    "tests/test_ax25_core.py": "bd20a5c7705590a533ccd03210eacf2011a36fb1f66f1a56c549f15a87225627",
+    "tests/test_hdlc.py": "52d4f40a972323d7d2be128d899eb3533cabc2edf14d28d15e9a13f47ab052f7",
+    "tests/test_receiver.py": "348de155755655d611ae7f57ad12ce7fe18e32525b5db628c89052d9b2624576",
+    "tests/test_reliability.py": "f402d0dd882456c8564483ffcdb87b96ffb97c01d90486f38983aee77f676a21",
+    "tests/test_integration.py": "e9baf7224148ead106ed7591bebddddbc052fb73f7ff2709827fe08373a5ba30",
+    "tests/test_acceptance.py": "8e40ff8e422ec869c9900e49fe061f6803bdd713bafb629ebed97cf2dbff3fe1"
+  },
+  "throughput_benchmark": {
+    "num_frames": 500,
+    "payload_size": 128,
+    "total_bytes": 74000,
+    "elapsed_seconds": 0.5786979999975301,
+    "frames_per_sec": 864.0085156716179,
+    "throughput_kbps": 1022.9860825551957,
+    "throughput_mbps": 1.0229860825551957
+  },
+  "tests": [
+    {
+      "id": "test_acceptance.TestDeterministicRandomizedReliability.test_multiseed_payload_round_trips",
+      "name": "test_multiseed_payload_round_trips",
+      "suite": "TestDeterministicRandomizedReliability",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.6875,
+      "doc": "Verify round-trip data preservation across 4 fixed random seeds."
+    },
+    {
+      "id": "test_acceptance.TestDeterministicRandomizedReliability.test_pathological_payload_patterns",
+      "name": "test_pathological_payload_patterns",
+      "suite": "TestDeterministicRandomizedReliability",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.0378,
+      "doc": "Verify survival of pathological payload byte patterns."
+    },
+    {
+      "id": "test_acceptance.TestMixedContinuousStreamRobustness.test_mixed_stream_with_interleaved_faults",
+      "name": "test_mixed_stream_with_interleaved_faults",
+      "suite": "TestMixedContinuousStreamRobustness",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.4121,
+      "doc": "Send 100 frames where every 3rd has CRC error, every 5th is aborted, every 7th oversized."
+    },
+    {
+      "id": "test_acceptance.TestPayloadSizeBoundaries.test_maximum_information_boundary",
+      "name": "test_maximum_information_boundary",
+      "suite": "TestPayloadSizeBoundaries",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.0961,
+      "doc": "4078 bytes accepted, 4079 bytes rejected by builder and receiver."
+    },
+    {
+      "id": "test_acceptance.TestPayloadSizeBoundaries.test_oversized_frame_recovery_subsequent_frame_intact",
+      "name": "test_oversized_frame_recovery_subsequent_frame_intact",
+      "suite": "TestPayloadSizeBoundaries",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.0483,
+      "doc": "Receiver must recover immediately following an oversized frame."
+    },
+    {
+      "id": "test_acceptance.TestPerformanceAndMemoryBehavior.test_sustained_load_throughput_benchmark",
+      "name": "test_sustained_load_throughput_benchmark",
+      "suite": "TestPerformanceAndMemoryBehavior",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.7887,
+      "doc": "Benchmark 500 frames through the complete NRZI + HDLC + AX.25 pipeline."
+    },
+    {
+      "id": "test_acceptance.TestProfileRejectionEnforcement.test_rejection_of_malformed_wire_addresses",
+      "name": "test_rejection_of_malformed_wire_addresses",
+      "suite": "TestProfileRejectionEnforcement",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.0004,
+      "doc": "Reject addresses with invalid reserved bits or extension bits."
+    },
+    {
+      "id": "test_acceptance.TestProfileRejectionEnforcement.test_rejection_of_unsupported_control_fields",
+      "name": "test_rejection_of_unsupported_control_fields",
+      "suite": "TestProfileRejectionEnforcement",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.0045,
+      "doc": "Reject all non-UI frame control fields even with valid CRC-16."
+    },
+    {
+      "id": "test_acceptance.TestProfileRejectionEnforcement.test_rejection_of_unsupported_pids",
+      "name": "test_rejection_of_unsupported_pids",
+      "suite": "TestProfileRejectionEnforcement",
+      "module": "test_acceptance",
+      "status": "PASS",
+      "duration_sec": 0.0046,
+      "doc": "Reject all non-0xF0 PIDs even with valid CRC-16."
+    },
+    {
+      "id": "test_ax25_core.TestAX25AcceptanceVectors.test_crc16_x25_standard_check_value",
+      "name": "test_crc16_x25_standard_check_value",
+      "suite": "TestAX25AcceptanceVectors",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25AcceptanceVectors.test_empty_information_field_round_trip",
+      "name": "test_empty_information_field_round_trip",
+      "suite": "TestAX25AcceptanceVectors",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25AcceptanceVectors.test_frame_decoder_rejects_unsupported_pid_with_valid_fcs",
+      "name": "test_frame_decoder_rejects_unsupported_pid_with_valid_fcs",
+      "suite": "TestAX25AcceptanceVectors",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0003,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Address.test_address_round_trip",
+      "name": "test_address_round_trip",
+      "suite": "TestAX25Address",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Address.test_destination_encoding",
+      "name": "test_destination_encoding",
+      "suite": "TestAX25Address",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Address.test_invalid_callsign",
+      "name": "test_invalid_callsign",
+      "suite": "TestAX25Address",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Address.test_invalid_ssid",
+      "name": "test_invalid_ssid",
+      "suite": "TestAX25Address",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Address.test_parse_address",
+      "name": "test_parse_address",
+      "suite": "TestAX25Address",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Address.test_source_encoding",
+      "name": "test_source_encoding",
+      "suite": "TestAX25Address",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Frame.test_corrupted_frame_rejected",
+      "name": "test_corrupted_frame_rejected",
+      "suite": "TestAX25Frame",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0002,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Frame.test_encode_decode_round_trip",
+      "name": "test_encode_decode_round_trip",
+      "suite": "TestAX25Frame",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0002,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Frame.test_frame_flags",
+      "name": "test_frame_flags",
+      "suite": "TestAX25Frame",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Frame.test_frame_length",
+      "name": "test_frame_length",
+      "suite": "TestAX25Frame",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Frame.test_known_fcs",
+      "name": "test_known_fcs",
+      "suite": "TestAX25Frame",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0007,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Frame.test_missing_closing_flag",
+      "name": "test_missing_closing_flag",
+      "suite": "TestAX25Frame",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0002,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25Frame.test_missing_opening_flag",
+      "name": "test_missing_opening_flag",
+      "suite": "TestAX25Frame",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_address_rejects_empty_and_invalid_characters",
+      "name": "test_address_rejects_empty_and_invalid_characters",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_address_rejects_non_decimal_or_out_of_range_ssid",
+      "name": "test_address_rejects_non_decimal_or_out_of_range_ssid",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_address_rejects_non_string",
+      "name": "test_address_rejects_non_string",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_decode_address_rejects_invalid_low_bits",
+      "name": "test_decode_address_rejects_invalid_low_bits",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_decode_address_rejects_reserved_bits_clear",
+      "name": "test_decode_address_rejects_reserved_bits_clear",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_frame_builder_enforces_maximum_information",
+      "name": "test_frame_builder_enforces_maximum_information",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0104,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_frame_builder_requires_bytes_like_information",
+      "name": "test_frame_builder_requires_bytes_like_information",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_frame_decoder_rejects_non_bytes_input",
+      "name": "test_frame_decoder_rejects_non_bytes_input",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_frame_decoder_rejects_unsupported_control_with_valid_fcs",
+      "name": "test_frame_decoder_rejects_unsupported_control_with_valid_fcs",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0002,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25ProductionValidation.test_verified_body_parser_is_shared_with_receiver",
+      "name": "test_verified_body_parser_is_shared_with_receiver",
+      "suite": "TestAX25ProductionValidation",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25SpecificationEdgeCases.test_address_rejects_non_ascii_that_uppercases_to_ascii",
+      "name": "test_address_rejects_non_ascii_that_uppercases_to_ascii",
+      "suite": "TestAX25SpecificationEdgeCases",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25SpecificationEdgeCases.test_uppercase_wire_callsign_still_decodes",
+      "name": "test_uppercase_wire_callsign_still_decodes",
+      "suite": "TestAX25SpecificationEdgeCases",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_ax25_core.TestAX25SpecificationEdgeCases.test_wire_callsign_must_be_uppercase_ascii",
+      "name": "test_wire_callsign_must_be_uppercase_ascii",
+      "suite": "TestAX25SpecificationEdgeCases",
+      "module": "test_ax25_core",
+      "status": "PASS",
+      "duration_sec": 0.0002,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestAX25Transmitter.test_bit_stuffing",
+      "name": "test_bit_stuffing",
+      "suite": "TestAX25Transmitter",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestAX25Transmitter.test_complete_round_trip",
+      "name": "test_complete_round_trip",
+      "suite": "TestAX25Transmitter",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0007,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestAX25Transmitter.test_lsb_first",
+      "name": "test_lsb_first",
+      "suite": "TestAX25Transmitter",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestAX25Transmitter.test_nrzi_known_vector",
+      "name": "test_nrzi_known_vector",
+      "suite": "TestAX25Transmitter",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestAX25Transmitter.test_nrzi_round_trip",
+      "name": "test_nrzi_round_trip",
+      "suite": "TestAX25Transmitter",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestHDLCStreamDecoder.test_chunked_stream",
+      "name": "test_chunked_stream",
+      "suite": "TestHDLCStreamDecoder",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0013,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestHDLCStreamDecoder.test_corrupted_frame_rejected",
+      "name": "test_corrupted_frame_rejected",
+      "suite": "TestHDLCStreamDecoder",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0005,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestHDLCStreamDecoder.test_invalid_bit_rejected",
+      "name": "test_invalid_bit_rejected",
+      "suite": "TestHDLCStreamDecoder",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestHDLCStreamDecoder.test_multiple_frames",
+      "name": "test_multiple_frames",
+      "suite": "TestHDLCStreamDecoder",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0012,
+      "doc": ""
+    },
+    {
+      "id": "test_hdlc.TestHDLCStreamDecoder.test_single_frame",
+      "name": "test_single_frame",
+      "suite": "TestHDLCStreamDecoder",
+      "module": "test_hdlc",
+      "status": "PASS",
+      "duration_sec": 0.0006,
+      "doc": ""
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_arbitrary_streaming_chunk_sizes",
+      "name": "test_e2e_arbitrary_streaming_chunk_sizes",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0089,
+      "doc": "Verify that feeding NRZI levels in prime or arbitrary chunk sizes retains state."
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_bit_stuffing_stress_long_ones",
+      "name": "test_e2e_bit_stuffing_stress_long_ones",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.005,
+      "doc": "Stress bit stuffing with payloads containing dense sequences of 1 bits."
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_boundary_payload_sizes",
+      "name": "test_e2e_boundary_payload_sizes",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.1419,
+      "doc": "Verify boundary payload sizes up to the exact maximum limit (4078 bytes)."
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_empty_payload",
+      "name": "test_e2e_empty_payload",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0003,
+      "doc": ""
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_multiple_consecutive_frames_back_to_back",
+      "name": "test_e2e_multiple_consecutive_frames_back_to_back",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0032,
+      "doc": "Verify transmission of multiple consecutive frames with standard flags."
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_multiple_idle_flags_between_frames",
+      "name": "test_e2e_multiple_idle_flags_between_frames",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0009,
+      "doc": "Verify that multiple idle 0x7E flags between frames are cleanly ignored."
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_ordinary_telemetry_payload",
+      "name": "test_e2e_ordinary_telemetry_payload",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.001,
+      "doc": ""
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_shared_delimiter_flag",
+      "name": "test_e2e_shared_delimiter_flag",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0008,
+      "doc": "Verify that two frames sharing a single 0x7E delimiter flag are both decoded."
+    },
+    {
+      "id": "test_integration.TestEndToEndIntegration.test_e2e_split_across_critical_boundaries",
+      "name": "test_e2e_split_across_critical_boundaries",
+      "suite": "TestEndToEndIntegration",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0006,
+      "doc": "Specifically split chunks at exact structural boundaries."
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_continuous_stream_recovery_after_random_noise",
+      "name": "test_continuous_stream_recovery_after_random_noise",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0039,
+      "doc": "Verify pipeline resynchronizes on valid frame after bursts of line noise."
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_corrupted_fcs_inverted",
+      "name": "test_corrupted_fcs_inverted",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0004,
+      "doc": ""
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_corrupted_fcs_single_and_double_bit_flips",
+      "name": "test_corrupted_fcs_single_and_double_bit_flips",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0022,
+      "doc": ""
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_hdlc_abort_sequence_handling_and_recovery",
+      "name": "test_hdlc_abort_sequence_handling_and_recovery",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0017,
+      "doc": "HDLC abort: 7 or more contiguous 1s must abort current frame and recover."
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_missing_closing_flag",
+      "name": "test_missing_closing_flag",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0008,
+      "doc": ""
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_missing_opening_flag",
+      "name": "test_missing_opening_flag",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0006,
+      "doc": ""
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_oversized_frame_rejection_and_pipeline_recovery",
+      "name": "test_oversized_frame_rejection_and_pipeline_recovery",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0451,
+      "doc": "Oversized frame (> 4096 bytes HDLC content) must be dropped and recover."
+    },
+    {
+      "id": "test_integration.TestErrorRecoveryAndRejection.test_preservation_of_frame_ordering_and_content",
+      "name": "test_preservation_of_frame_ordering_and_content",
+      "suite": "TestErrorRecoveryAndRejection",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0978,
+      "doc": "Ensure 50 frames with variable sizes are recovered in exact sequence."
+    },
+    {
+      "id": "test_integration.TestIndependentInteroperability.test_ax25_v22_spec_address_vectors",
+      "name": "test_ax25_v22_spec_address_vectors",
+      "suite": "TestIndependentInteroperability",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": "Verify AX.25 v2.2 specification address field encoding (Section 3.12)."
+    },
+    {
+      "id": "test_integration.TestIndependentInteroperability.test_crc16_x25_authoritative_vectors",
+      "name": "test_crc16_x25_authoritative_vectors",
+      "suite": "TestIndependentInteroperability",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0005,
+      "doc": "Verify CRC-16/X-25 standard catalog test vectors.\n\nStandard parameters:\n  Polynomial: 0x1021 (reflected: 0x8408)\n  Initial remainder: 0xFFFF\n  Reflect in/out: True\n  Final XOR: 0xFFFF"
+    },
+    {
+      "id": "test_integration.TestIndependentInteroperability.test_crc16_x25_fcs_residual_constant",
+      "name": "test_crc16_x25_fcs_residual_constant",
+      "suite": "TestIndependentInteroperability",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0001,
+      "doc": "Verifies mathematical HDLC FCS residual check (0xF0B8).\n\nIn ISO 3309 / AX.25, appending the 16-bit FCS (low byte first) to the\ndata and computing the CRC without final inversion yields the fixed\nconstant residue 0xF0B8."
+    },
+    {
+      "id": "test_integration.TestIndependentInteroperability.test_independent_reference_model_cross_validation",
+      "name": "test_independent_reference_model_cross_validation",
+      "suite": "TestIndependentInteroperability",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0003,
+      "doc": "Cross-validate project implementation against IndependentAX25Reference."
+    },
+    {
+      "id": "test_integration.TestIndependentInteroperability.test_wire_conventions_lsb_first_and_nrzi_transitions",
+      "name": "test_wire_conventions_lsb_first_and_nrzi_transitions",
+      "suite": "TestIndependentInteroperability",
+      "module": "test_integration",
+      "status": "PASS",
+      "duration_sec": 0.0,
+      "doc": "Verify LSB-first bit ordering and NRZI line level transitions.\n\nAX.25 v2.2 Section 3.8: All octets (except FCS) are transmitted LSB-first.\nNRZI: '0' bit causes a transition; '1' bit causes no transition."
+    },
+    {
+      "id": "test_receiver.TestAX25Receiver.test_binary_payload",
+      "name": "test_binary_payload",
+      "suite": "TestAX25Receiver",
+      "module": "test_receiver",
+      "status": "PASS",
+      "duration_sec": 0.0026,
+      "doc": ""
+    },
+    {
+      "id": "test_receiver.TestAX25Receiver.test_corrupted_frame",
+      "name": "test_corrupted_frame",
+      "suite": "TestAX25Receiver",
+      "module": "test_receiver",
+      "status": "PASS",
+      "duration_sec": 0.0004,
+      "doc": ""
+    },
+    {
+      "id": "test_receiver.TestAX25Receiver.test_streaming_chunks",
+      "name": "test_streaming_chunks",
+      "suite": "TestAX25Receiver",
+      "module": "test_receiver",
+      "status": "PASS",
+      "duration_sec": 0.0004,
+      "doc": ""
+    },
+    {
+      "id": "test_receiver.TestAX25Receiver.test_two_frames",
+      "name": "test_two_frames",
+      "suite": "TestAX25Receiver",
+      "module": "test_receiver",
+      "status": "PASS",
+      "duration_sec": 0.0006,
+      "doc": ""
+    },
+    {
+      "id": "test_receiver.TestAX25Receiver.test_valid_telemetry",
+      "name": "test_valid_telemetry",
+      "suite": "TestAX25Receiver",
+      "module": "test_receiver",
+      "status": "PASS",
+      "duration_sec": 0.0004,
+      "doc": ""
+    },
+    {
+      "id": "test_receiver.TestDemodulatorHandoff.test_nrzi_level_streaming_chunks",
+      "name": "test_nrzi_level_streaming_chunks",
+      "suite": "TestDemodulatorHandoff",
+      "module": "test_receiver",
+      "status": "PASS",
+      "duration_sec": 0.0008,
+      "doc": ""
+    },
+    {
+      "id": "test_receiver.TestDemodulatorHandoff.test_nrzi_levels_from_demodulator_reach_phase1_parser",
+      "name": "test_nrzi_levels_from_demodulator_reach_phase1_parser",
+      "suite": "TestDemodulatorHandoff",
+      "module": "test_receiver",
+      "status": "PASS",
+      "duration_sec": 0.0006,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestAX25Robustness.test_automatic_resynchronization",
+      "name": "test_automatic_resynchronization",
+      "suite": "TestAX25Robustness",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0005,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestAX25Robustness.test_binary_payload",
+      "name": "test_binary_payload",
+      "suite": "TestAX25Robustness",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0043,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestAX25Robustness.test_corrupted_frame_recovery",
+      "name": "test_corrupted_frame_recovery",
+      "suite": "TestAX25Robustness",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0015,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestAX25Robustness.test_missing_closing_flag",
+      "name": "test_missing_closing_flag",
+      "suite": "TestAX25Robustness",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0004,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestAX25Robustness.test_missing_opening_flag",
+      "name": "test_missing_opening_flag",
+      "suite": "TestAX25Robustness",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0002,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestAX25Robustness.test_noise_recovery",
+      "name": "test_noise_recovery",
+      "suite": "TestAX25Robustness",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0005,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestAX25Robustness.test_truncated_frame_with_reset",
+      "name": "test_truncated_frame_with_reset",
+      "suite": "TestAX25Robustness",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0006,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCBoundaryRegression.test_frame12_closing_flag",
+      "name": "test_frame12_closing_flag",
+      "suite": "TestHDLCBoundaryRegression",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0014,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCFinalAcceptance.test_abort_and_recovery",
+      "name": "test_abort_and_recovery",
+      "suite": "TestHDLCFinalAcceptance",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0007,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCFinalAcceptance.test_buffer_overflow_and_recovery",
+      "name": "test_buffer_overflow_and_recovery",
+      "suite": "TestHDLCFinalAcceptance",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0387,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCFinalAcceptance.test_continuous_chunked_stream",
+      "name": "test_continuous_chunked_stream",
+      "suite": "TestHDLCFinalAcceptance",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.2444,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCFinalAcceptance.test_crc_corruption_and_recovery",
+      "name": "test_crc_corruption_and_recovery",
+      "suite": "TestHDLCFinalAcceptance",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.154,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCFinalAcceptance.test_maximum_frame_boundary",
+      "name": "test_maximum_frame_boundary",
+      "suite": "TestHDLCFinalAcceptance",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0224,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCFinalAcceptance.test_no_invalid_frame_accepted",
+      "name": "test_no_invalid_frame_accepted",
+      "suite": "TestHDLCFinalAcceptance",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0004,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCFinalAcceptance.test_randomized_round_trip_1000",
+      "name": "test_randomized_round_trip_1000",
+      "suite": "TestHDLCFinalAcceptance",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 2.9067,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCSizeBoundary.test_4097_bytes_rejected",
+      "name": "test_4097_bytes_rejected",
+      "suite": "TestHDLCSizeBoundary",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.039,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCSizeBoundary.test_exactly_4096_bytes_accepted",
+      "name": "test_exactly_4096_bytes_accepted",
+      "suite": "TestHDLCSizeBoundary",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.038,
+      "doc": ""
+    },
+    {
+      "id": "test_reliability.TestHDLCSizeBoundary.test_recovery_after_oversized_frame",
+      "name": "test_recovery_after_oversized_frame",
+      "suite": "TestHDLCSizeBoundary",
+      "module": "test_reliability",
+      "status": "PASS",
+      "duration_sec": 0.0396,
+      "doc": ""
+    }
+  ]
+}

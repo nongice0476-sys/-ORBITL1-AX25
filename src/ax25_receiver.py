@@ -5,63 +5,28 @@ Receives HDLC bits and parses CRC-validated AX.25 UI frames.
 Mobilinkd HDLC decoder verifies FCS before returning the body.
 """
 
-from src.ax25 import (
-    AX25_UI_CONTROL,
-    AX25_NO_LAYER3_PID,
-    decode_address,
-)
+from src.ax25 import decode_verified_ui_body
 from src.ax25_hdlc import HDLCStreamDecoder
+from src.ax25_transmitter import nrzi_decode
 
 
 class AX25ReceivePipeline:
     def __init__(self):
         self._decoder = HDLCStreamDecoder()
-
-    def _parse_verified_body(self, body: bytes):
-        # Body has already passed HDLC FCS verification.
-        # Mobilinkd removes the two FCS bytes.
-        if len(body) < 16:
-            raise ValueError("AX.25 UI body is too short")
-
-        destination = decode_address(body[0:7])
-        source = decode_address(body[7:14])
-
-        if destination[2]:
-            raise ValueError("Unexpected final destination address")
-
-        if not source[2]:
-            raise ValueError("Digipeater addresses not supported")
-
-        control = body[14]
-        pid = body[15]
-
-        if control != AX25_UI_CONTROL:
-            raise ValueError("Unsupported AX.25 control field")
-
-        if pid != AX25_NO_LAYER3_PID:
-            raise ValueError("Unsupported AX.25 PID")
-
-        return {
-            "destination": {
-                "callsign": destination[0],
-                "ssid": destination[1],
-            },
-            "source": {
-                "callsign": source[0],
-                "ssid": source[1],
-            },
-            "control": control,
-            "pid": pid,
-            "information": body[16:],
-            "fcs_verified": True,
-        }
+        self._nrzi_previous_level = 0
 
     def feed_bits(self, bits):
+        """Accept demodulated HDLC bits after NRZI decoding.
+
+        The iterable may be a complete frame or an arbitrary streaming chunk.
+        Only CRC-valid HDLC bodies that match the supported AX.25 UI profile
+        are returned.
+        """
         packets = []
 
         for body in self._decoder.feed(bits):
             try:
-                packet = self._parse_verified_body(body)
+                packet = decode_verified_ui_body(body)
             except ValueError:
                 # CRC-valid but unsupported/malformed frame.
                 continue
@@ -70,5 +35,26 @@ class AX25ReceivePipeline:
 
         return packets
 
+    def feed_nrzi_levels(self, levels, initial_level: int | None = None):
+        """Accept binary NRZI levels from a demodulator and decode packets.
+
+        This is the digital interface immediately after RF/SDR demodulation;
+        it does not consume raw audio/IQ samples or perform clock recovery.
+        NRZI state is retained across chunks. Supply ``initial_level`` only
+        when deliberately starting a new line-level stream.
+        """
+        levels = list(levels)
+        if initial_level is not None:
+            if type(initial_level) is not int or initial_level not in (0, 1):
+                raise ValueError("Invalid initial NRZI level")
+            self._nrzi_previous_level = initial_level
+        if not levels:
+            return []
+
+        bits = nrzi_decode(levels, initial_level=self._nrzi_previous_level)
+        self._nrzi_previous_level = levels[-1]
+        return self.feed_bits(bits)
+
     def reset(self):
         self._decoder.reset()
+        self._nrzi_previous_level = 0

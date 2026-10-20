@@ -4,7 +4,10 @@
 import random
 import unittest
 
-from src.ax25 import build_ui_frame
+from src.ax25 import (
+    AX25_FLAG, AX25_UI_CONTROL, AX25_NO_LAYER3_PID,
+    MAX_INFORMATION_BYTES, build_ui_frame, encode_address, crc16_x25,
+)
 from src.ax25_transmitter import (
     encode_hdlc,
     nrzi_encode,
@@ -299,13 +302,28 @@ class TestHDLCBoundaryRegression(unittest.TestCase):
 
 class TestHDLCSizeBoundary(unittest.TestCase):
 
+    @staticmethod
+    def make_oversized_wire_frame(payload):
+        """Construct an invalid oversized frame to exercise receiver rejection.
+
+        The production builder intentionally refuses to create this frame, so
+        the test creates the malformed input at the wire boundary directly.
+        """
+        body = bytearray()
+        body.extend(encode_address("GROUND", last=False))
+        body.extend(encode_address("ORBITL-1", last=True))
+        body.extend((AX25_UI_CONTROL, AX25_NO_LAYER3_PID))
+        body.extend(payload)
+        fcs = crc16_x25(bytes(body))
+        content = bytes(body) + bytes((fcs & 0xFF, (fcs >> 8) & 0xFF))
+        return bytes((AX25_FLAG,)) + content + bytes((AX25_FLAG,))
+
     def receive(self, payload):
-        frame = build_ui_frame(
-            "GROUND", "ORBITL-1", payload
-        )
-        return AX25ReceivePipeline().feed_bits(
-            encode_hdlc(frame)
-        )
+        if len(payload) > MAX_INFORMATION_BYTES:
+            frame = self.make_oversized_wire_frame(payload)
+        else:
+            frame = build_ui_frame("GROUND", "ORBITL-1", payload)
+        return AX25ReceivePipeline().feed_bits(encode_hdlc(frame))
 
     def test_exactly_4096_bytes_accepted(self):
         # AX.25 frame body:
@@ -327,10 +345,7 @@ class TestHDLCSizeBoundary(unittest.TestCase):
         self.assertEqual(packets, [])
 
     def test_recovery_after_oversized_frame(self):
-        oversized = build_ui_frame(
-            "GROUND", "ORBITL-1",
-            b"B" * 4079
-        )
+        oversized = self.make_oversized_wire_frame(b"B" * 4079)
         valid = build_ui_frame(
             "GROUND", "ORBITL-1",
             b"RECOVERY-OK"

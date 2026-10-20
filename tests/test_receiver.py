@@ -90,3 +90,32 @@ class TestAX25Receiver(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestDemodulatorHandoff(unittest.TestCase):
+
+    def test_nrzi_levels_from_demodulator_reach_phase1_parser(self):
+        from src.ax25_transmitter import nrzi_encode
+
+        payload = b"SEQ=205;BAT=7.55V"
+        frame = build_ui_frame("GROUND", "ORBITL-1", payload)
+        levels = nrzi_encode(encode_hdlc(frame))
+
+        packets = AX25ReceivePipeline().feed_nrzi_levels(levels)
+        self.assertEqual(len(packets), 1)
+        self.assertEqual(packets[0]["information"], payload)
+        self.assertTrue(packets[0]["fcs_verified"])
+
+    def test_nrzi_level_streaming_chunks(self):
+        from src.ax25_transmitter import nrzi_encode
+
+        payload = b"CHUNKED-RF-INTERFACE"
+        frame = build_ui_frame("GROUND", "ORBITL-1", payload)
+        levels = nrzi_encode(encode_hdlc(frame))
+
+        receiver = AX25ReceivePipeline()
+        packets = []
+        for offset in range(0, len(levels), 13):
+            packets.extend(receiver.feed_nrzi_levels(levels[offset:offset + 13]))
+
+        self.assertEqual([packet["information"] for packet in packets], [payload])
