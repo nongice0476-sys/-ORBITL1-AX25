@@ -30,7 +30,13 @@ OUT_DIR = ROOT / "docs" / "project"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 PDF_PATH = OUT_DIR / "ORBITL1_AX25_Progress_Presentation_Slides.pdf"
 
-# Fonts
+# Fonts & Shaping
+try:
+    import uharfbuzz
+    HAS_SHAPING = True
+except ImportError:
+    HAS_SHAPING = False
+
 FONT_REGULAR = "Helvetica"
 FONT_BOLD = "Helvetica-Bold"
 
@@ -136,6 +142,7 @@ def get_styles():
         leading=34,
         textColor=colors.white,
         spaceAfter=8,
+        shaping=HAS_SHAPING,
     )
     styles["CoverSub"] = ParagraphStyle(
         "CoverSub",
@@ -144,6 +151,7 @@ def get_styles():
         leading=18,
         textColor=C_CYAN,
         spaceAfter=20,
+        shaping=HAS_SHAPING,
     )
     styles["CoverMeta"] = ParagraphStyle(
         "CoverMeta",
@@ -151,6 +159,7 @@ def get_styles():
         fontSize=9.5,
         leading=14,
         textColor=colors.HexColor("#C9DDE6"),
+        shaping=HAS_SHAPING,
     )
     styles["SlideTitle"] = ParagraphStyle(
         "SlideTitle",
@@ -159,6 +168,7 @@ def get_styles():
         leading=22,
         textColor=C_DEEP,
         spaceAfter=2,
+        shaping=HAS_SHAPING,
     )
     styles["SlideCategory"] = ParagraphStyle(
         "SlideCategory",
@@ -167,6 +177,7 @@ def get_styles():
         leading=11,
         textColor=C_CYAN,
         spaceAfter=4,
+        shaping=HAS_SHAPING,
     )
     styles["SlideSub"] = ParagraphStyle(
         "SlideSub",
@@ -175,6 +186,7 @@ def get_styles():
         leading=13,
         textColor=C_MUTED,
         spaceAfter=10,
+        shaping=HAS_SHAPING,
     )
     styles["SectionHeader"] = ParagraphStyle(
         "SectionHeader",
@@ -184,6 +196,7 @@ def get_styles():
         textColor=C_DEEP,
         spaceBefore=4,
         spaceAfter=4,
+        shaping=HAS_SHAPING,
     )
     styles["Normal"] = ParagraphStyle(
         "Normal",
@@ -191,6 +204,7 @@ def get_styles():
         fontSize=8.5,
         leading=12,
         textColor=C_DARK,
+        shaping=HAS_SHAPING,
     )
     styles["NormalBold"] = ParagraphStyle(
         "NormalBold",
@@ -198,6 +212,7 @@ def get_styles():
         fontSize=8.5,
         leading=12,
         textColor=C_DEEP,
+        shaping=HAS_SHAPING,
     )
     styles["TableHead"] = ParagraphStyle(
         "TableHead",
@@ -205,6 +220,7 @@ def get_styles():
         fontSize=8,
         leading=10.5,
         textColor=colors.white,
+        shaping=HAS_SHAPING,
     )
     styles["TableCell"] = ParagraphStyle(
         "TableCell",
@@ -212,6 +228,7 @@ def get_styles():
         fontSize=7.8,
         leading=10.5,
         textColor=C_DARK,
+        shaping=HAS_SHAPING,
     )
     styles["TableCellBold"] = ParagraphStyle(
         "TableCellBold",
@@ -219,6 +236,7 @@ def get_styles():
         fontSize=7.8,
         leading=10.5,
         textColor=C_DEEP,
+        shaping=HAS_SHAPING,
     )
     styles["TableCellGreen"] = ParagraphStyle(
         "TableCellGreen",
@@ -226,6 +244,7 @@ def get_styles():
         fontSize=7.8,
         leading=10.5,
         textColor=C_GREEN,
+        shaping=HAS_SHAPING,
     )
     styles["KpiNumber"] = ParagraphStyle(
         "KpiNumber",
@@ -234,6 +253,7 @@ def get_styles():
         leading=24,
         textColor=C_DEEP,
         alignment=1,
+        shaping=HAS_SHAPING,
     )
     styles["KpiLabel"] = ParagraphStyle(
         "KpiLabel",
@@ -242,6 +262,7 @@ def get_styles():
         leading=10,
         textColor=C_BLUE,
         alignment=1,
+        shaping=HAS_SHAPING,
     )
     styles["KpiSub"] = ParagraphStyle(
         "KpiSub",
@@ -250,6 +271,7 @@ def get_styles():
         leading=9,
         textColor=C_MUTED,
         alignment=1,
+        shaping=HAS_SHAPING,
     )
     styles["CardTitle"] = ParagraphStyle(
         "CardTitle",
@@ -258,6 +280,7 @@ def get_styles():
         leading=12,
         textColor=C_DEEP,
         spaceAfter=3,
+        shaping=HAS_SHAPING,
     )
     styles["CardBody"] = ParagraphStyle(
         "CardBody",
@@ -265,6 +288,7 @@ def get_styles():
         fontSize=7.8,
         leading=10.5,
         textColor=C_DARK,
+        shaping=HAS_SHAPING,
     )
     return styles
 
@@ -677,9 +701,11 @@ def build_presentation_slides():
     deliv_table = make_slide_table(
         ["รายการไฟล์ส่งมอบ (Deliverable)", "ที่อยู่ไฟล์ (Path)", "ขนาดไฟล์", "การตรวจสอบความถูกต้อง (Verification)"],
         [
-            ["Release Project ZIP Package", "ORBITL1-AX25_Phases1-4_Release.zip", "7.32 MB", "แตกไฟล์ทดสอบรันซ้ำใน Clean Env ผ่าน 95/95 ทันที"],
-            ["Cumulative Master Engineering Report", "docs/project/ORBITL1_AX25_Master_Engineering_Report.pdf", "36 kB (5 หน้า)", "รายงานวิศวกรรมฉบับสมบูรณ์ มีตาราง, ผังไดอะแกรม และ KPI ครบ"],
-            ["Phase 4 Technical Report", "docs/project/ORBITL1_AX25_Phase4_Technical_Report.pdf", "29 kB (4 หน้า)", "รายงานเจาะลึก Phase 4 พร้อมหลักฐานเทียบ Phase 3 และโค้ดจริง"],
+            ["Phase 1 Technical Report", "docs/project/ORBITL1_AX25_Phase1_Technical_Report.pdf", "31 kB (4 หน้า)", "รายงานเจาะลึก Phase 1: Frame Core, Addressing และ CRC-16"],
+            ["Phase 2 Technical Report", "docs/project/ORBITL1_AX25_Phase2_Technical_Report.pdf", "30 kB (4 หน้า)", "รายงานเจาะลึก Phase 2: HDLC Framing, Bit Stuffing และ NRZI"],
+            ["Phase 3 Technical Report", "docs/project/ORBITL1_AX25_Phase3_Technical_Report.pdf", "30 kB (4 หน้า)", "รายงานเจาะลึก Phase 3: E2E Integration และ Reference Model"],
+            ["Phase 4 Technical Report", "docs/project/ORBITL1_AX25_Phase4_Technical_Report.pdf", "31 kB (4 หน้า)", "รายงานเจาะลึก Phase 4: Reliability, Fault Injection และ Benchmark"],
+            ["Progress Presentation Paper", "docs/project/ORBITL1_AX25_Progress_Presentation_Paper.pdf", "68 kB (2 หน้า)", "เอกสารสรุปความคืบหน้ารูปแบบ Academic Paper 2 หน้ากระชับ"],
             ["Machine-Readable Test Summary", "docs/project/test_results.json", "33 kB", "บันทึกผลการทดสอบเชิงเครื่อง 95 รายการ พร้อม Benchmark และ Hashes"],
             ["Progress Presentation Slides (ชุดนี้)", "docs/project/ORBITL1_AX25_Progress_Presentation_Slides.pdf", "สร้างสดใหม่", "สไลด์สรุปผลงานระดับผู้บริหารและทีมวิศวกรรม"],
         ],

@@ -1,0 +1,46 @@
+ ORBITL1-AX25/
+    ├── .gitignore
+    ├── README.md
+    ├── THIRD_PARTY_NOTICES.md
+    ├── docs/
+    │   ├── design/
+    │   │   └── protocol-development.md
+    │   ├── project/
+    │   │   ├── ORBITL1_AX25_Phase1_Technical_Report.pdf      (รายงานเทคนิคเจาะลึก เฟส 1: Frame Core)
+    │   │   ├── ORBITL1_AX25_Phase2_Technical_Report.pdf      (รายงานเทคนิคเจาะลึก เฟส 2: HDLC & NRZI)
+    │   │   ├── ORBITL1_AX25_Phase3_Technical_Report.pdf      (รายงานเทคนิคเจาะลึก เฟส 3: E2E Integration)
+    │   │   ├── ORBITL1_AX25_Phase4_Technical_Report.pdf      (รายงานเทคนิคเจาะลึก เฟส 4: Reliability & Benchmark)
+    │   │   ├── ORBITL1_AX25_Progress_Presentation_Paper.pdf  (เปเปอร์รายงานความคืบหน้า)
+    │   │   ├── ORBITL1_AX25_Roadmap_Clear.pdf                (แผนภาพ Roadmap & สถาปัตยกรรมระบบ)
+    │   │   └── test_results.json                             (ผลทดสอบอัตโนมัติ 95/95 รายการ)
+    │   └── reference/
+    │       ├── AX25.2.2-Jul-98.pdf                           (ต้นฉบับมาตรฐาน TAPR/ARRL ภาษาอังกฤษ)
+    │       └── AX25.2.2-Jul-98-TH.pdf                        (ฉบับแปลภาษาไทย)
+    ├── requirements/
+    │   └── docs.txt
+    ├── scripts/
+    │   ├── documentation/
+    │   │   ├── build_phase_reports.py                        (สคริปต์คอมไพล์รายงานทางเทคนิคเฟส 1 - 4)
+    │   │   ├── build_presentation_paper.py                   (สคริปต์คอมไพล์เปเปอร์สรุปผล 2 หน้า)
+    │   │   ├── build_presentation_slides.py
+    │   │   └── translate_pdf.py
+    │   ├── package_release.py
+    │   └── run_and_record_tests.py                           (สคริปต์รันและบันทึกชุดทดสอบ 95 รายการ)
+    ├── src/
+    │   ├── __init__.py
+    │   ├── ax25.py                                           (เฟรมเวิร์ก AX.25, แอดเดรส, UI Frame, CRC-16)
+    │   ├── ax25_hdlc.py                                      (HDLC Bit Framing, Bit Stuffing, NRZI Coding)
+    │   ├── ax25_receiver.py                                  (โมดูลรับสัญญาณและถอดรหัสสตรีม AX.25)
+    │   ├── ax25_transmitter.py                               (โมดูลประกอบเฟรมและเข้ารหัสส่ง AX.25)
+    │   └── vendor/
+    │       └── mobilinkd/
+    │           ├── CRC.py
+    │           ├── HDLC.py
+    │           └── LICENSE
+    └── tests/
+        ├── test_acceptance.py                                (การทดสอบเกณฑ์ยอมรับและประสิทธิภาพ 9 รายการ)
+        ├── test_ax25_core.py                                 (การทดสอบโครงสร้าง AX.25 และแอดเดรส 29 รายการ)
+        ├── test_hdlc.py                                      (การทดสอบ HDLC & NRZI 10 รายการ)
+        ├── test_integration.py                               (การทดสอบ E2E และความเข้ากันได้ตามมาตรฐาน 22 รายการ)
+        ├── test_receiver.py                                  (การทดสอบท่อรับสัญญาณ 7 รายการ)
+        └── test_reliability.py                               (การทดสอบความทนทานและการกู้คืนข้อผิดพลาด 18 รายการ)

@@ -1,5 +1,5 @@
 {
-  "timestamp_iso": "2026-10-20T08:12:01Z",
+  "timestamp_iso": "2026-10-20T11:41:03Z",
   "python_version": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
   "platform": "Windows-11-10.0.26300-SP0",
   "total_tests": 95,
@@ -7,7 +7,7 @@
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "total_duration_sec": 8.28,
+  "total_duration_sec": 6.283,
   "success": true,
   "file_hashes": {
     "src/ax25.py": "8da3d41a47c8211e482270a554cbb04e046867159dadfb789e8944990e30b9f1",
@@ -28,10 +28,10 @@
     "num_frames": 500,
     "payload_size": 128,
     "total_bytes": 74000,
-    "elapsed_seconds": 0.8340544999809936,
-    "frames_per_sec": 599.4812089754255,
-    "throughput_kbps": 709.7857514269037,
-    "throughput_mbps": 0.7097857514269037
+    "elapsed_seconds": 0.6191902999999002,
+    "frames_per_sec": 807.5061899388292,
+    "throughput_kbps": 956.0873288875738,
+    "throughput_mbps": 0.9560873288875738
   },
   "tests": [
     {
@@ -40,7 +40,7 @@
       "suite": "TestDeterministicRandomizedReliability",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.842,
+      "duration_sec": 0.6103,
       "doc": "Verify round-trip data preservation across 4 fixed random seeds."
     },
     {
@@ -49,7 +49,7 @@
       "suite": "TestDeterministicRandomizedReliability",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.0622,
+      "duration_sec": 0.0391,
       "doc": "Verify survival of pathological payload byte patterns."
     },
     {
@@ -58,7 +58,7 @@
       "suite": "TestMixedContinuousStreamRobustness",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.5664,
+      "duration_sec": 0.4331,
       "doc": "Send 100 frames where every 3rd has CRC error, every 5th is aborted, every 7th oversized."
     },
     {
@@ -67,7 +67,7 @@
       "suite": "TestPayloadSizeBoundaries",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.1198,
+      "duration_sec": 0.0911,
       "doc": "4078 bytes accepted, 4079 bytes rejected by builder and receiver."
     },
     {
@@ -76,7 +76,7 @@
       "suite": "TestPayloadSizeBoundaries",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.0792,
+      "duration_sec": 0.0442,
       "doc": "Receiver must recover immediately following an oversized frame."
     },
     {
@@ -85,7 +85,7 @@
       "suite": "TestPerformanceAndMemoryBehavior",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 1.1363,
+      "duration_sec": 0.8445,
       "doc": "Benchmark 500 frames through the complete NRZI + HDLC + AX.25 pipeline."
     },
     {
@@ -94,7 +94,7 @@
       "suite": "TestProfileRejectionEnforcement",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.0005,
+      "duration_sec": 0.0008,
       "doc": "Reject addresses with invalid reserved bits or extension bits."
     },
     {
@@ -103,7 +103,7 @@
       "suite": "TestProfileRejectionEnforcement",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.0062,
+      "duration_sec": 0.0066,
       "doc": "Reject all non-UI frame control fields even with valid CRC-16."
     },
     {
@@ -112,7 +112,7 @@
       "suite": "TestProfileRejectionEnforcement",
       "module": "test_acceptance",
       "status": "PASS",
-      "duration_sec": 0.0075,
+      "duration_sec": 0.0059,
       "doc": "Reject all non-0xF0 PIDs even with valid CRC-16."
     },
     {
@@ -130,7 +130,7 @@
       "suite": "TestAX25AcceptanceVectors",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0002,
+      "duration_sec": 0.0001,
       "doc": ""
     },
     {
@@ -184,7 +184,7 @@
       "suite": "TestAX25Address",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0,
+      "duration_sec": 0.0001,
       "doc": ""
     },
     {
@@ -202,7 +202,7 @@
       "suite": "TestAX25Frame",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0003,
+      "duration_sec": 0.0002,
       "doc": ""
     },
     {
@@ -238,7 +238,7 @@
       "suite": "TestAX25Frame",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0002,
+      "duration_sec": 0.0003,
       "doc": ""
     },
     {
@@ -256,7 +256,7 @@
       "suite": "TestAX25Frame",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0002,
+      "duration_sec": 0.0001,
       "doc": ""
     },
     {
@@ -301,7 +301,7 @@
       "suite": "TestAX25ProductionValidation",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0036,
+      "duration_sec": 0.0001,
       "doc": ""
     },
     {
@@ -310,7 +310,7 @@
       "suite": "TestAX25ProductionValidation",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0142,
+      "duration_sec": 0.0098,
       "doc": ""
     },
     {
@@ -337,7 +337,7 @@
       "suite": "TestAX25ProductionValidation",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0003,
+      "duration_sec": 0.0002,
       "doc": ""
     },
     {
@@ -346,7 +346,7 @@
       "suite": "TestAX25ProductionValidation",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0003,
+      "duration_sec": 0.0002,
       "doc": ""
     },
     {
@@ -364,7 +364,7 @@
       "suite": "TestAX25SpecificationEdgeCases",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0002,
+      "duration_sec": 0.0001,
       "doc": ""
     },
     {
@@ -373,7 +373,7 @@
       "suite": "TestAX25SpecificationEdgeCases",
       "module": "test_ax25_core",
       "status": "PASS",
-      "duration_sec": 0.0005,
+      "duration_sec": 0.0003,
       "doc": ""
     },
     {
@@ -391,7 +391,7 @@
       "suite": "TestAX25Transmitter",
       "module": "test_hdlc",
       "status": "PASS",
-      "duration_sec": 0.0011,
+      "duration_sec": 0.0008,
       "doc": ""
     },
     {
@@ -427,7 +427,7 @@
       "suite": "TestHDLCStreamDecoder",
       "module": "test_hdlc",
       "status": "PASS",
-      "duration_sec": 0.0007,
+      "duration_sec": 0.0005,
       "doc": ""
     },
     {
@@ -436,7 +436,7 @@
       "suite": "TestHDLCStreamDecoder",
       "module": "test_hdlc",
       "status": "PASS",
-      "duration_sec": 0.0008,
+      "duration_sec": 0.0004,
       "doc": ""
     },
     {
@@ -445,7 +445,7 @@
       "suite": "TestHDLCStreamDecoder",
       "module": "test_hdlc",
       "status": "PASS",
-      "duration_sec": 0.0001,
+      "duration_sec": 0.0,
       "doc": ""
     },
     {
@@ -454,7 +454,7 @@
       "suite": "TestHDLCStreamDecoder",
       "module": "test_hdlc",
       "status": "PASS",
-      "duration_sec": 0.0012,
+      "duration_sec": 0.0009,
       "doc": ""
     },
     {
@@ -463,7 +463,7 @@
       "suite": "TestHDLCStreamDecoder",
       "module": "test_hdlc",
       "status": "PASS",
-      "duration_sec": 0.0006,
+      "duration_sec": 0.0005,
       "doc": ""
     },
     {
@@ -472,7 +472,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0139,
+      "duration_sec": 0.0166,
       "doc": "Verify that feeding NRZI levels in prime or arbitrary chunk sizes retains state."
     },
     {
@@ -481,7 +481,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0105,
+      "duration_sec": 0.0076,
       "doc": "Stress bit stuffing with payloads containing dense sequences of 1 bits."
     },
     {
@@ -490,7 +490,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.2024,
+      "duration_sec": 0.1504,
       "doc": "Verify boundary payload sizes up to the exact maximum limit (4078 bytes)."
     },
     {
@@ -499,7 +499,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0005,
+      "duration_sec": 0.0003,
       "doc": ""
     },
     {
@@ -508,7 +508,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0051,
+      "duration_sec": 0.0036,
       "doc": "Verify transmission of multiple consecutive frames with standard flags."
     },
     {
@@ -517,7 +517,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0018,
+      "duration_sec": 0.0012,
       "doc": "Verify that multiple idle 0x7E flags between frames are cleanly ignored."
     },
     {
@@ -526,7 +526,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.002,
+      "duration_sec": 0.0016,
       "doc": ""
     },
     {
@@ -535,7 +535,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0014,
+      "duration_sec": 0.0013,
       "doc": "Verify that two frames sharing a single 0x7E delimiter flag are both decoded."
     },
     {
@@ -544,7 +544,7 @@
       "suite": "TestEndToEndIntegration",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0012,
+      "duration_sec": 0.0011,
       "doc": "Specifically split chunks at exact structural boundaries."
     },
     {
@@ -553,7 +553,7 @@
       "suite": "TestErrorRecoveryAndRejection",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0052,
+      "duration_sec": 0.0042,
       "doc": "Verify pipeline resynchronizes on valid frame after bursts of line noise."
     },
     {
@@ -562,7 +562,7 @@
       "suite": "TestErrorRecoveryAndRejection",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0009,
+      "duration_sec": 0.0008,
       "doc": ""
     },
     {
@@ -571,7 +571,7 @@
       "suite": "TestErrorRecoveryAndRejection",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0037,
+      "duration_sec": 0.0028,
       "doc": ""
     },
     {
@@ -589,7 +589,7 @@
       "suite": "TestErrorRecoveryAndRejection",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.001,
+      "duration_sec": 0.0005,
       "doc": ""
     },
     {
@@ -598,7 +598,7 @@
       "suite": "TestErrorRecoveryAndRejection",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0007,
+      "duration_sec": 0.0006,
       "doc": ""
     },
     {
@@ -607,7 +607,7 @@
       "suite": "TestErrorRecoveryAndRejection",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0606,
+      "duration_sec": 0.0474,
       "doc": "Oversized frame (> 4096 bytes HDLC content) must be dropped and recover."
     },
     {
@@ -616,7 +616,7 @@
       "suite": "TestErrorRecoveryAndRejection",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.1323,
+      "duration_sec": 0.0978,
       "doc": "Ensure 50 frames with variable sizes are recovered in exact sequence."
     },
     {
@@ -634,7 +634,7 @@
       "suite": "TestIndependentInteroperability",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0007,
+      "duration_sec": 0.0005,
       "doc": "Verify CRC-16/X-25 standard catalog test vectors.\n\nStandard parameters:\n  Polynomial: 0x1021 (reflected: 0x8408)\n  Initial remainder: 0xFFFF\n  Reflect in/out: True\n  Final XOR: 0xFFFF"
     },
     {
@@ -652,7 +652,7 @@
       "suite": "TestIndependentInteroperability",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0004,
+      "duration_sec": 0.0003,
       "doc": "Cross-validate project implementation against IndependentAX25Reference."
     },
     {
@@ -661,7 +661,7 @@
       "suite": "TestIndependentInteroperability",
       "module": "test_integration",
       "status": "PASS",
-      "duration_sec": 0.0,
+      "duration_sec": 0.0001,
       "doc": "Verify LSB-first bit ordering and NRZI line level transitions.\n\nAX.25 v2.2 Section 3.8: All octets (except FCS) are transmitted LSB-first.\nNRZI: '0' bit causes a transition; '1' bit causes no transition."
     },
     {
@@ -670,7 +670,7 @@
       "suite": "TestAX25Receiver",
       "module": "test_receiver",
       "status": "PASS",
-      "duration_sec": 0.0036,
+      "duration_sec": 0.0027,
       "doc": ""
     },
     {
@@ -679,7 +679,7 @@
       "suite": "TestAX25Receiver",
       "module": "test_receiver",
       "status": "PASS",
-      "duration_sec": 0.0005,
+      "duration_sec": 0.0003,
       "doc": ""
     },
     {
@@ -688,7 +688,7 @@
       "suite": "TestAX25Receiver",
       "module": "test_receiver",
       "status": "PASS",
-      "duration_sec": 0.0005,
+      "duration_sec": 0.0004,
       "doc": ""
     },
     {
@@ -697,7 +697,7 @@
       "suite": "TestAX25Receiver",
       "module": "test_receiver",
       "status": "PASS",
-      "duration_sec": 0.0008,
+      "duration_sec": 0.0007,
       "doc": ""
     },
     {
@@ -715,7 +715,7 @@
       "suite": "TestDemodulatorHandoff",
       "module": "test_receiver",
       "status": "PASS",
-      "duration_sec": 0.0007,
+      "duration_sec": 0.0008,
       "doc": ""
     },
     {
@@ -724,7 +724,7 @@
       "suite": "TestDemodulatorHandoff",
       "module": "test_receiver",
       "status": "PASS",
-      "duration_sec": 0.0006,
+      "duration_sec": 0.0008,
       "doc": ""
     },
     {
@@ -733,7 +733,7 @@
       "suite": "TestAX25Robustness",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0007,
+      "duration_sec": 0.0009,
       "doc": ""
     },
     {
@@ -742,7 +742,7 @@
       "suite": "TestAX25Robustness",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0036,
+      "duration_sec": 0.0049,
       "doc": ""
     },
     {
@@ -751,7 +751,7 @@
       "suite": "TestAX25Robustness",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0011,
+      "duration_sec": 0.0015,
       "doc": ""
     },
     {
@@ -760,7 +760,7 @@
       "suite": "TestAX25Robustness",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0004,
+      "duration_sec": 0.001,
       "doc": ""
     },
     {
@@ -769,7 +769,7 @@
       "suite": "TestAX25Robustness",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0003,
+      "duration_sec": 0.0005,
       "doc": ""
     },
     {
@@ -778,7 +778,7 @@
       "suite": "TestAX25Robustness",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0005,
+      "duration_sec": 0.0007,
       "doc": ""
     },
     {
@@ -787,7 +787,7 @@
       "suite": "TestAX25Robustness",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0006,
+      "duration_sec": 0.001,
       "doc": ""
     },
     {
@@ -796,7 +796,7 @@
       "suite": "TestHDLCBoundaryRegression",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0021,
+      "duration_sec": 0.0017,
       "doc": ""
     },
     {
@@ -805,7 +805,7 @@
       "suite": "TestHDLCFinalAcceptance",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0017,
+      "duration_sec": 0.0011,
       "doc": ""
     },
     {
@@ -814,7 +814,7 @@
       "suite": "TestHDLCFinalAcceptance",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0552,
+      "duration_sec": 0.0493,
       "doc": ""
     },
     {
@@ -823,7 +823,7 @@
       "suite": "TestHDLCFinalAcceptance",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.3331,
+      "duration_sec": 0.2632,
       "doc": ""
     },
     {
@@ -832,7 +832,7 @@
       "suite": "TestHDLCFinalAcceptance",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.2257,
+      "duration_sec": 0.1718,
       "doc": ""
     },
     {
@@ -841,7 +841,7 @@
       "suite": "TestHDLCFinalAcceptance",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0402,
+      "duration_sec": 0.0257,
       "doc": ""
     },
     {
@@ -859,7 +859,7 @@
       "suite": "TestHDLCFinalAcceptance",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 4.1035,
+      "duration_sec": 3.1444,
       "doc": ""
     },
     {
@@ -868,7 +868,7 @@
       "suite": "TestHDLCSizeBoundary",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0826,
+      "duration_sec": 0.0459,
       "doc": ""
     },
     {
@@ -877,7 +877,7 @@
       "suite": "TestHDLCSizeBoundary",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0623,
+      "duration_sec": 0.0673,
       "doc": ""
     },
     {
@@ -886,7 +886,7 @@
       "suite": "TestHDLCSizeBoundary",
       "module": "test_reliability",
       "status": "PASS",
-      "duration_sec": 0.0602,
+      "duration_sec": 0.0565,
       "doc": ""
     }
   ]

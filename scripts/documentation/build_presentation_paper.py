@@ -32,7 +32,13 @@ OUT_DIR = ROOT / "docs" / "project"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 PDF_PATH = OUT_DIR / "ORBITL1_AX25_Progress_Presentation_Paper.pdf"
 
-# Fonts setup
+# Fonts and Shaping setup
+try:
+    import uharfbuzz
+    HAS_SHAPING = True
+except ImportError:
+    HAS_SHAPING = False
+
 FONT_REGULAR = "Helvetica"
 FONT_BOLD = "Helvetica-Bold"
 
@@ -124,6 +130,7 @@ def get_paper_styles():
         textColor=C_BLACK,
         alignment=1,  # Center
         spaceAfter=3,
+        shaping=HAS_SHAPING,
     )
     styles["DocSub"] = ParagraphStyle(
         "DocSub",
@@ -133,6 +140,7 @@ def get_paper_styles():
         textColor=C_MUTED,
         alignment=1,
         spaceAfter=7,
+        shaping=HAS_SHAPING,
     )
     styles["Heading1"] = ParagraphStyle(
         "Heading1",
@@ -142,6 +150,7 @@ def get_paper_styles():
         textColor=C_BLACK,
         spaceBefore=5,
         spaceAfter=2,
+        shaping=HAS_SHAPING,
     )
     styles["Heading2"] = ParagraphStyle(
         "Heading2",
@@ -151,6 +160,7 @@ def get_paper_styles():
         textColor=C_BLACK,
         spaceBefore=3.5,
         spaceAfter=1.5,
+        shaping=HAS_SHAPING,
     )
     styles["Body"] = ParagraphStyle(
         "Body",
@@ -159,6 +169,7 @@ def get_paper_styles():
         leading=10.6,
         textColor=C_DARK,
         spaceAfter=2,
+        shaping=HAS_SHAPING,
     )
     styles["BodyBold"] = ParagraphStyle(
         "BodyBold",
@@ -167,6 +178,7 @@ def get_paper_styles():
         leading=10.6,
         textColor=C_BLACK,
         spaceAfter=2,
+        shaping=HAS_SHAPING,
     )
     styles["TableHead"] = ParagraphStyle(
         "TableHead",
@@ -174,6 +186,7 @@ def get_paper_styles():
         fontSize=7.2,
         leading=9.0,
         textColor=C_BLACK,
+        shaping=HAS_SHAPING,
     )
     styles["TableCell"] = ParagraphStyle(
         "TableCell",
@@ -181,6 +194,7 @@ def get_paper_styles():
         fontSize=7.2,
         leading=9.4,
         textColor=C_DARK,
+        shaping=HAS_SHAPING,
     )
     styles["TableCellBold"] = ParagraphStyle(
         "TableCellBold",
@@ -188,6 +202,7 @@ def get_paper_styles():
         fontSize=7.2,
         leading=9.4,
         textColor=C_BLACK,
+        shaping=HAS_SHAPING,
     )
     styles["Code"] = ParagraphStyle(
         "Code",
@@ -195,6 +210,7 @@ def get_paper_styles():
         fontSize=6.6,
         leading=8.5,
         textColor=C_BLACK,
+        shaping=HAS_SHAPING,
     )
     styles["MetaBlock"] = ParagraphStyle(
         "MetaBlock",
@@ -202,6 +218,7 @@ def get_paper_styles():
         fontSize=7.4,
         leading=10.5,
         textColor=C_DARK,
+        shaping=HAS_SHAPING,
     )
     styles["Note"] = ParagraphStyle(
         "Note",
@@ -209,6 +226,7 @@ def get_paper_styles():
         fontSize=7.2,
         leading=9.8,
         textColor=C_BLACK,
+        shaping=HAS_SHAPING,
     )
     return styles
 
@@ -286,7 +304,7 @@ def build_progress_paper():
     meta_table = Table([
         [
             Paragraph("<b>โครงการ:</b> ดาวเทียมวิจัย ORBITL-1 CubeSat<br/><b>ระบบย่อย:</b> ระบบสื่อสารข้อมูล (AX.25 Track)<br/><b>ภาษาที่ใช้:</b> Python 3.14 (Standard Library Only)", styles["MetaBlock"]),
-            Paragraph("<b>สถานะปัจจุบัน:</b> ผ่านการทดสอบระดับซอฟต์แวร์ครบ 100%<br/><b>ผลการทดสอบ:</b> 95 / 95 Tests PASS (0 Failures, 0 Errors)<br/><b>วันที่จัดทำ:</b> 20 ตุลาคม 2026", styles["MetaBlock"]),
+            Paragraph("<b>สถานะปัจจุบัน:</b> ผ่านการทดสอบระดับซอฟต์แวร์ครบ 100%<br/><b>ผลการทดสอบ:</b> 95 / 95 Tests PASS (0 Failures, 0 Errors)", styles["MetaBlock"]),
         ]
     ], colWidths=[260, 263])
     meta_table.setStyle(TableStyle([
@@ -308,7 +326,7 @@ def build_progress_paper():
         [
             ["Phase 1: Frame Core", "- ออกแบบและสร้าง AX.25 UI Frame (Control 0x03, PID 0xF0)<br/>- ตรวจสอบ Address Field, Callsign (1-6 ตัวอักษร) และ SSID (0-15)<br/>- คำนวณและตรวจสอบ CRC-16/X-25 แบบ Low-Byte First", "ได้ Frame Encoder/Decoder พร้อม Guard Validation ตรวจจับรูปแบบข้อมูลผิดพลาดได้ 100%"],
             ["Phase 2: HDLC & NRZI", "- แปลงข้อมูลไบต์เป็น Bitstream แบบ LSB-First<br/>- ระบบ Bit Stuffing (แทรกบิต 0 หลังบิต 1 ต่อเนื่อง 5 ตัว) และ Flag 0x7E<br/>- Line Coding แบบ NRZI (Invert on Zero) สลับระดับสัญญาณ<br/>- HDLC Stream Decoder จำกัด Frame Buffer สูงสุด 4,096 ไบต์", "ได้ Bit-level Framing Pipeline และ Streaming Decoder ที่รักษา State ข้าม Chunk ได้สมบูรณ์"],
-            ["Phase 3: E2E Integration", "- เชื่อมต่อ End-to-End Pipeline ครบวงจร (Payload -> Framing -> NRZI -> Decoder)<br/>- รองรับการรับส่งสตรีมแบบผันแปร (Streaming Chunks ขนาด 1 ถึง 128 บิต)<br/>- ตรวจสอบความถูกต้องเทียบกับเวกเตอร์อ้างอิงตามมาตรฐานสากล<br/>- พัฒนาโมเดลจำลองอิสระ (Pure-Python Reference Model) เทียบชนบิตต่อบิต", "ยืนยันความสอดคล้องตามมาตรฐานระดับบิตต่อบิต (Bit-accurate Interoperability) 100%"],
+            ["Phase 3: E2E Integration", "- เชื่อมต่อ End-to-End Pipeline ครบวงจร (Payload -> Framing -> NRZI -> Decoder)<br/>- รองรับการรับส่งสตรีมแบบผันแปร (Streaming Chunks ขนาด 1 ถึง 128 บิต)<br/>- ตรวจสอบความถูกต้องเทียบกับเวกเตอร์อ้างอิงตามมาตรฐาน<br/>- พัฒนาโมเดลจำลองอิสระ (Pure-Python Reference Model) เทียบชนบิตต่อบิต", "ยืนยันความสอดคล้องตามมาตรฐานระดับบิตต่อบิต (Bit-accurate Interoperability) 100%"],
             ["Phase 4: Reliability & Benchmark", "- วางแนวป้องกัน Fault Injection (ตัดทิ้ง Frame เสีย, Frame Abort, Bit-Flip)<br/>- ตรวจจับและปฏิเสธ Frame ที่ขนาดเกิน 4,078 ไบต์ ป้องกัน Buffer Overflow<br/>- Sustained Workload Benchmark สตรีมต่อเนื่อง 500 เฟรม วัด Throughput และ Memory", "ระบบมีความทนทานสูงต่อสัญญาณรบกวน (High Robustness) พร้อมผลวัดประสิทธิภาพเชิงตัวเลข"],
         ],
         [110, 250, 163],
@@ -356,42 +374,40 @@ def build_progress_paper():
     # =========================================================================
     story.append(PageBreak())
 
-    # SECTION 3: STANDARDS INTEROPERABILITY
-    story.append(Paragraph("3. การทดสอบความถูกต้องตามมาตรฐานสากล", styles["Heading1"]))
+    # SECTION 3: STANDARDS INTEROPERABILITY & CITATIONS
+    story.append(Paragraph("3. การอ้างอิงมาตรฐานและการทดสอบความถูกต้อง", styles["Heading1"]))
     story.append(Paragraph(
-        "เพื่อให้มั่นใจว่าระบบสามารถทำงานร่วมกับมาตรฐานทั่วไปได้อย่างถูกต้อง "
-        "ได้นำค่าทดสอบตามข้อกำหนดมาตรฐานสากลมาเปรียบเทียบผลลัพธ์แบบบิตต่อบิต:",
+        "ระบบสื่อสาร ORBITL-1 AX.25 ได้รับการพัฒนาและตรวจสอบตามข้อกำหนดมาตรฐาน 3 ฉบับหลัก "
+        "เพื่อให้มั่นใจว่าซอฟต์แวร์สอดคล้องตามมาตรฐานระดับบิตต่อบิต (Bit-accurate Interoperability):",
         styles["Body"],
     ))
 
     interop_table = make_plain_table(
-        ["เกณฑ์อ้างอิง (Reference)", "เวกเตอร์ทดสอบ (Input Vector)", "ค่าตามมาตรฐาน (Expected Value)", "ค่าที่ระบบคำนวณได้ (Actual Output)", "สถานะ (Status)"],
+        ["เกณฑ์อ้างอิง (Reference)", "เวกเตอร์ทดสอบ (Input Vector)", "ค่าตามข้อกำหนด (Expected)", "ค่าที่ระบบคำนวณได้ (Actual)", "สถานะ (Status)"],
         [
-            ["ตามมาตรฐาน", "Standard ASCII Vector: '123456789'", "CRC-16 = 0x906E", "0x906E", "ตรงกัน"],
-            ["ตามมาตรฐาน", "Null / Empty Payload: b''", "CRC-16 = 0x0000", "0x0000", "ตรงกัน"],
-            ["ตามมาตรฐาน", "Single Byte Vector: b'A'", "CRC-16 = 0xA3F5", "0xA3F5", "ตรงกัน"],
-            ["ตามมาตรฐาน AX.25", "Destination 'NJ7P', SSID 0 (Not Last)", "9C 94 6E A0 40 40 60", "9C 94 6E A0 40 40 60", "ตรงกัน"],
-            ["ตามมาตรฐาน AX.25", "Source 'N7LEM', SSID 0 (Last Address)", "9C 6E 98 8A 9A 40 61", "9C 6E 98 8A 9A 40 61", "ตรงกัน"],
-            ["ตามมาตรฐาน", "FCS Residual Constant Check", "Residual Constant = 0xF0B8", "0xF0B8 (Residue Verified)", "ตรงกัน"],
-            ["โมเดลจำลองอิสระ", "Pure-Python Independent Reference Model", "เทียบโครงสร้างบิตต่อบิต (Bit-accurate)", "สอดคล้องตรงกันทุกตำแหน่งบิต 100%", "ตรงกัน"],
+            ["ตามมาตรฐาน (ISO/IEC 3309)", "CRC-16 ASCII Vector: '123456789'", "CRC-16 = 0x906E", "0x906E (ถูกต้องตามสเปก)", "ตรงกัน"],
+            ["ตามมาตรฐาน (ISO/IEC 3309)", "CRC-16 FCS Residue Verification", "Residual Constant = 0xF0B8", "0xF0B8 (Residue Verified)", "ตรงกัน"],
+            ["ตามมาตรฐาน AX.25 (TAPR v2.2)", "Destination 'NJ7P', SSID 0 (Bit 0=0)", "9C 94 6E A0 40 40 60", "9C 94 6E A0 40 40 60", "ตรงกัน"],
+            ["ตามมาตรฐาน AX.25 (TAPR v2.2)", "Source 'N7LEM', SSID 0 (Bit 0=1)", "9C 6E 98 8A 9A 40 61", "9C 6E 98 8A 9A 40 61", "ตรงกัน"],
+            ["ตามมาตรฐาน AX.25 (TAPR v2.2)", "LSB-First Order, UI Control 0x03, PID 0xF0", "Control=0x03, PID=0xF0", "โครงสร้าง UI Frame ถูกต้อง", "ตรงกัน"],
+            ["ตามมาตรฐาน HDLC (ITU-T V.42)", "HDLC Delimiter Flag 0x7E & Bit Stuffing", "Flag 0x7E, Insert 0 after 5x '1'", "แทรกและถอดบิตตรงตามสเปก", "ตรงกัน"],
+            ["ตามมาตรฐาน (Reference Model)", "NRZI Line Coding & E2E Stream Pipeline", "ตรงกันบิตต่อบิต (Bit-accurate)", "สอดคล้องตรงกันทุกตำแหน่ง 100%", "ตรงกัน"],
         ],
-        [125, 142, 114, 102, 40],
+        [135, 137, 112, 99, 40],
         styles,
         pad_v=1.5,
     )
     story.append(interop_table)
     story.append(Spacer(1, 3))
 
-    hash_text = (
-        "<b>การตรวจสอบความสมบูรณ์ของไฟล์ต้นฉบับ (SHA-256 Checksum):</b><br/>"
-        "- <code>src/ax25.py</code>: <code>8da3d41a47c8211e482270a554cbb04e046867159dadfb789e8944990e30b9f1</code> (คงเดิม 100%)<br/>"
-        "- <code>src/ax25_hdlc.py</code>: <code>38fbab7afe40a822bbee0ea0b0c5047deede1ab1f05306813e01ff11a4894391</code> (คงเดิม 100%)<br/>"
-        "- <code>src/ax25_receiver.py</code>: <code>7d9b6c1df0af7636f4babdf1e9a980f425045ee63a17c2740f0f3c681bb87d68</code> (คงเดิม 100%)<br/>"
-        "- <code>src/ax25_transmitter.py</code>: <code>6120408159812b97dfc1612a54c8f58d54bd76c4810d9941ce29280c2029aca8</code> (คงเดิม 100%)<br/>"
-        "- <code>src/vendor/mobilinkd/HDLC.py</code>: <code>db5c61e16cbff27cce26d244ed71afffdb4c42c036588c57c990e6754dbe7b36</code> (คงเดิม 100%)"
+    std_text = (
+        "<b>รายการมาตรฐานที่ใช้เป็นเกณฑ์อ้างอิงและตรวจสอบในระบบ (Normative Standards Citations):</b><br/>"
+        "1. <b>TAPR / ARRL AX.25 Version 2.2 (July 1998):</b> กำหนดโครงสร้างเฟรม UI, Address Shifting (Sec 3.12), LSB-First (Sec 2.2.3) และ Control 0x03, PID 0xF0<br/>"
+        "2. <b>ISO/IEC 3309:1993 / ITU-T Recommendation X.25:</b> กำหนดการคำนวณ FCS CRC-16 (พหุนาม x^16 + x^12 + x^5 + 1) และค่าตรวจคงเหลือ 0xF0B8<br/>"
+        "3. <b>ITU-T Recommendation V.42 / ISO 7776:</b> กำหนด HDLC Framing (Flag 0x7E, Bit Stuffing หลังบิต 1 ห้าตัว) และ Line Coding แบบ NRZI (Invert on Zero)"
     )
-    story.append(make_box(hash_text, styles, width=523, pad_v=2.5))
-    story.append(Spacer(1, 4))
+    story.append(make_box(std_text, styles, width=523, pad_v=2.4))
+    story.append(Spacer(1, 3.5))
 
     # SECTION 4: PERFORMANCE BENCHMARK (Engineering Terms in Table)
     story.append(Paragraph("4. ผลการวัดความเร็วและประสิทธิภาพการทำงาน", styles["Heading1"]))
@@ -410,7 +426,7 @@ def build_progress_paper():
             ["Effective Throughput", "1,022.98 kbps (~1.02 Mbps)", "วิทยุ CubeSat: 1.2 kbps (AFSK) / 9.6 kbps (GFSK)", "ขีดความสามารถซอฟต์แวร์มี Headroom สูงกว่าอัตราส่งวิทยุจริง >100 เท่า"],
             ["Memory Stability", "Heap คงที่สมบูรณ์ (Zero Leak Profile)", "รันสตรีมต่อเนื่องหลายพันรอบ ไม่พบ Memory บวม", "เสถียรภาพสูง ปลอดภัยต่อการรันเป็น Background Service บนสถานีภาคพื้น"],
         ],
-        [125, 135, 138, 125],
+        [122, 133, 135, 133],
         styles,
         pad_v=1.6,
     )
@@ -438,98 +454,16 @@ def build_progress_paper():
         pad_v=1.6,
     )
     story.append(demarc_table)
-
-    # =========================================================================
-    # PAGE 3: PHASE 5 PLAN, DELIVERABLES, RF NOTICE & SIGN-OFF
-    # =========================================================================
-    story.append(PageBreak())
+    story.append(Spacer(1, 3))
 
     phase5_plan = (
         "<b>แผนงานขั้นต่อไปในเฟส 5 (เชื่อมต่อวิทยุและสถานีภาคพื้น):</b><br/>"
-        "1. <b>ทำตัวเชื่อมต่อ KISS Protocol:</b> เพื่อให้คุยกับวิทยุ TNC จริงหรือโปรแกรม Dire Wolf ผ่านพอร์ต Serial หรือ TCP ได้<br/>"
+        "1. <b>ทำตัวเชื่อมต่อ KISS Protocol:</b> เพื่อให้คุยกับวิทยุ TNC จริงหรือโปรแกรม Dire Wolf ผ่านพอร์ต Serial หรือ TCP ได้ "
         "2. <b>กำหนดรูปแบบข้อมูลดาวเทียม:</b> จัดวางตำแหน่งข้อมูลสถานะแบตเตอรี่ อุณหภูมิ และเซนเซอร์ต่างๆ ในตัวข้อมูล<br/>"
-        "3. <b>เชื่อมต่อหน้าจอควบคุมภาคพื้น:</b> ส่งข้อมูลเข้าโปรแกรมควบคุมภาคพื้นเพื่อแสดงผลแบบเรียลไทม์ และบันทึกลงฐานข้อมูล<br/>"
-        "4. <b>ทดสอบกับอุปกรณ์จริง (Hardware-in-the-Loop):</b> ทดสอบเชื่อมต่อผ่านการ์ดเสียงและอุปกรณ์วิทยุ SDR จำลองการส่งสัญญาณจริง"
+        "3. <b>เชื่อมต่อหน้าจอควบคุมภาคพื้น:</b> แสดงผลแบบเรียลไทม์ และบันทึกลงฐานข้อมูล "
+        "4. <b>ทดสอบกับอุปกรณ์จริง (Hardware-in-the-Loop):</b> เชื่อมต่อผ่านการ์ดเสียงและวิทยุ SDR จำลองการส่งสัญญาณจริง"
     )
-    story.append(make_box(phase5_plan, styles, width=523, pad_v=3.2))
-    story.append(Spacer(1, 4))
-
-    # SECTION 6: DELIVERABLES (Engineering Terms in Table)
-    story.append(Paragraph("6. รายการไฟล์และเอกสารที่ส่งมอบ", styles["Heading1"]))
-    story.append(Paragraph("ไฟล์งานทั้งหมดได้รับการตรวจสอบความถูกต้องและจัดเก็บเรียบร้อยแล้ว ดังนี้:", styles["Body"]))
-
-    deliv_table = make_plain_table(
-        ["รายการสิ่งส่งมอบ (Deliverable)", "พาธไฟล์ในระบบ (System Path)", "ขนาดไฟล์ (Size)", "การตรวจสอบและยืนยันผล (Verification Note)"],
-        [
-            ["Release ZIP Archive", "ORBITL1-AX25_Phases1-4_Release.zip", "~6.8 MB", "แตกไฟล์รันซ้ำใน Clean Environment ผ่าน 95/95 ทันที"],
-            ["Master Engineering Report", "docs/project/ORBITL1_AX25_Master_Engineering_Report.pdf", "37 kB", "รายงานวิศวกรรมฉบับแม่บท รวบรวมข้อมูล Phases 1 - 4 ครบถ้วน"],
-            ["Technical Report", "docs/project/ORBITL1_AX25_Phase4_Technical_Report.pdf", "30 kB", "รายงานเทคนิคเจาะลึก Phase 4 พร้อมสถาปัตยกรรมและผลทดสอบ"],
-            ["Progress Presentation Paper (ฉบับนี้)", "docs/project/ORBITL1_AX25_Progress_Presentation_Paper.pdf", "3 หน้า", "เอกสารนำเสนอแบบ Technical Paper สำหรับการประชุมและตรวจรับงาน"],
-            ["Test Results Machine Summary", "docs/project/test_results.json", "33 kB", "บันทึกผลการทดสอบเชิงเครื่อง 95 รายการและค่า Throughput Benchmark"],
-        ],
-        [145, 225, 55, 98],
-        styles,
-        pad_v=1.6,
-    )
-    story.append(deliv_table)
-    story.append(Spacer(1, 4))
-
-    # SECTION 7: RF NOTICE
-    story.append(Paragraph("7. ข้อควรรู้เกี่ยวกับฮาร์ดแวร์วิทยุ", styles["Heading1"]))
-    rf_notice = (
-        "<b>ข้อชี้แจงเพื่อความโปร่งใสทางวิศวกรรม:</b><br/>"
-        "แม้ว่าระบบซอฟต์แวร์จะผ่านการทดสอบยืนยันผลครบ 100% แล้ว แต่<b>ยังไม่ได้ทดสอบกับคลื่นวิทยุจริง</b> "
-        "โดยรายการด้านล่างนี้ถูกกำหนดให้เป็นส่วนที่ต้องนำไปทดสอบกับอุปกรณ์จริงในเฟส 5:<br/>"
-        "- การเชื่อมต่อสายสัญญาณกับอุปกรณ์วิทยุหรือกล่อง TNC จริง<br/>"
-        "- สัญญาณเสียงจากวิทยุและการปรับระดับความดัง (Audio Levels / Baseband IQ)<br/>"
-        "- การกู้คืนสัญญาณนาฬิกาและจังหวะของสัญญาณวิทยุ (Clock Recovery)<br/>"
-        "- การเบี่ยงเบนความถี่จากการเคลื่อนที่ของดาวเทียม (Doppler Effect ประมาณ +/- 3.5 kHz)<br/>"
-        "- การทดสอบระยะทางจริง และการสูญหายของสัญญาณในอากาศ (Link Margin, BER/PER)<br/>"
-        "<i>หมายเหตุ: ในเฟส 5 จะมีการจำลองต่อสายวิทยุ (Hardware-in-the-Loop) เพื่อทดสอบให้ครบถ้วนก่อนนำไปยิงสัญญาณจริง</i>"
-    )
-    story.append(make_box(rf_notice, styles, width=523, pad_v=3.2))
-    story.append(Spacer(1, 4))
-
-    # SECTION 8: ACCEPTANCE SIGN-OFF
-    story.append(Paragraph("8. สรุปผลการตรวจรับงาน", styles["Heading1"]))
-    signoff_text = (
-        "<b>สรุปผลการส่งมอบงานระดับซอฟต์แวร์:</b><br/>"
-        "ระบบโปรโตคอล AX.25 สำหรับโครงการดาวเทียม ORBITL-1 ในส่วน <b>เฟส 1 ถึง เฟส 4 ผ่านเกณฑ์การทดสอบระดับซอฟต์แวร์เรียบร้อย 100%</b> "
-        "(ผ่านครบทั้ง 95 การทดสอบ ไม่มีข้อผิดพลาด) โค้ดเดิมได้รับการรักษาไว้สมบูรณ์ตรงตามค่าตรวจสอบ SHA-256 "
-        "และจัดเก็บไฟล์อย่างเป็นระเบียบ พร้อมสำหรับการนำไปเชื่อมต่อกับวิทยุในเฟส 5 ต่อไปอย่างเป็นทางการ"
-    )
-    story.append(make_box(signoff_text, styles, width=523, pad_v=3.2))
-    story.append(Spacer(1, 4.5))
-
-    # Formal Signature block
-    sig_data = [
-        [
-            Paragraph("<b>ผู้จัดทำ (Prepared by):</b>", styles["TableHead"]),
-            Paragraph("<b>ผู้ตรวจสอบทางเทคนิค (Reviewed by):</b>", styles["TableHead"]),
-            Paragraph("<b>ผู้อนุมัติการตรวจรับ (Approved by):</b>", styles["TableHead"]),
-        ],
-        [
-            Paragraph("วิศวกรระบบสื่อสารดาวเทียม<br/>(Communication Protocol Engineer)<br/>วันที่: 20 ตุลาคม 2026", styles["TableCell"]),
-            Paragraph("วิศวกรสถาปัตยกรรมระบบ<br/>(Satellite Systems Architect)<br/>วันที่: 20 ตุลาคม 2026", styles["TableCell"]),
-            Paragraph("หัวหน้าโครงการ ORBITL-1<br/>(Mission Project Manager)<br/>สถานะ: <b>ผ่านการตรวจรับ (ACCEPTED)</b>", styles["TableCell"]),
-        ],
-        [
-            Paragraph("ลงชื่อ: ______________________", styles["TableCell"]),
-            Paragraph("ลงชื่อ: ______________________", styles["TableCell"]),
-            Paragraph("ลงชื่อ: ______________________", styles["TableCell"]),
-        ],
-    ]
-    sig_table = Table(sig_data, colWidths=[174, 174, 175])
-    sig_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), C_GRAY_HEADER),
-        ("BOX", (0, 0), (-1, -1), 0.6, C_BORDER),
-        ("INNERGRID", (0, 0), (-1, -1), 0.35, C_BORDER_LIGHT),
-        ("TOPPADDING", (0, 0), (-1, -1), 2.5),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
-        ("LEFTPADDING", (0, 0), (-1, -1), 4),
-        ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-    ]))
-    story.append(sig_table)
+    story.append(make_box(phase5_plan, styles, width=523, pad_v=2.5))
 
     doc.build(story, canvasmaker=PlainPaperCanvas)
     print(f"Generated Plain Presentation Paper PDF: {PDF_PATH} ({os.path.getsize(PDF_PATH)} bytes)")
